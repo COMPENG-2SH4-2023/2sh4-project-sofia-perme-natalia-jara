@@ -1,7 +1,6 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-#include "GameMechs.h"
 
 
 using namespace std;
@@ -17,7 +16,7 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-
+objPos myPos;
 
 int main(void)
 {
@@ -41,6 +40,7 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
+    myPos.setObjPos(2,3,'@');
 
     myGM = new GameMechs();
     //exit flag removed because object myGM already has flag = false
@@ -58,7 +58,8 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();  
+    MacUILib_printf("Object: <%d,%d> with %c\n",myPos.x, myPos.y,myPos.symbol); 
 
 }
 
