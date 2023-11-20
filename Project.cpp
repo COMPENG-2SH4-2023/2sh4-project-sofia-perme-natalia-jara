@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "Player.h"
 
 
 using namespace std;
@@ -16,7 +17,7 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-
+objPos myPos;
 
 int main(void)
 {
@@ -40,6 +41,7 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
+    myPos.setObjPos(2,3,'@');
 
     exitFlag = false;
 }
@@ -56,7 +58,8 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen();  
+    MacUILib_printf("Object: <%d,%d> with %c\n",myPos.x, myPos.y,myPos.symbol); 
 
 }
 
