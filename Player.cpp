@@ -97,18 +97,18 @@ void Player::movePlayer()
         break;
     }
 
-    //  if (myPos.x==mainGameMechsRef->getBoardSizeX()-1){
-    //     myPos.x=1;
-    // }
-    // else if (myPos.x==0){
-    //     myPos.x=mainGameMechsRef->getBoardSizeX()-2;
-    // }
-    // else if (myPos.y==0){
-    //     myPos.y=mainGameMechsRef->getBoardSizeY()-2;
-    // }
-    // else if (myPos.y==mainGameMechsRef->getBoardSizeY()-1){
-    //     myPos.y=1;
-    // }
+     if (playerPos.x==mainGameMechsRef->getBoardSizeX()-1){
+        playerPos.x=1;
+    }
+    else if (playerPos.x==0){
+        playerPos.x=mainGameMechsRef->getBoardSizeX()-2;
+    }
+    else if (playerPos.y==0){
+        playerPos.y=mainGameMechsRef->getBoardSizeY()-2;
+    }
+    else if (playerPos.y==mainGameMechsRef->getBoardSizeY()-1){
+        playerPos.y=1;
+    }
 
 }
 

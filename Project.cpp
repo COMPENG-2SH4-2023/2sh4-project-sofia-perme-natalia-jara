@@ -44,7 +44,7 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    myPos.setObjPos(2,3,'@');
+    // myPos.setObjPos(2,3,'@');
 
     myGM = new GameMechs(); //need to delete from heap?
     myPlayer = new Player(myGM);
@@ -85,7 +85,10 @@ void DrawScreen()
                 { // Use to check when reaching end/beginning of rectangel in order to draw sides
                     MacUILib_printf("#");
                 }               
-                else
+        else if (i==tempPos.y&& j==tempPos.x){
+            printf("%c", tempPos.symbol);
+        }
+        else
                 {
                     MacUILib_printf(" ");                   //draw blanks in box
                 }
