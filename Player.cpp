@@ -34,6 +34,8 @@ void Player::updatePlayerDir()
     //Where do I get the input where do I check for input
     //input-not by calling get char 
     // coordinate with teammemeber whos desining game mechanism
+    // objPos myPos;
+    GameMechs* myGM;
     char input = mainGameMechsRef->getInput();
     switch(input)
     {
@@ -68,11 +70,45 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
-    }      
+    }  
+    myGM -> clearInput();
 }
 
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
+
+
+     switch (myDir)
+    {
+    case UP:
+        playerPos.y--;
+        break;
+    case DOWN:
+        playerPos.y++;
+        break;
+    case LEFT:
+        playerPos.x--;
+        break;
+    case RIGHT:
+        playerPos.x++;
+        break;
+    case STOP:
+        break;
+    }
+
+    //  if (myPos.x==mainGameMechsRef->getBoardSizeX()-1){
+    //     myPos.x=1;
+    // }
+    // else if (myPos.x==0){
+    //     myPos.x=mainGameMechsRef->getBoardSizeX()-2;
+    // }
+    // else if (myPos.y==0){
+    //     myPos.y=mainGameMechsRef->getBoardSizeY()-2;
+    // }
+    // else if (myPos.y==mainGameMechsRef->getBoardSizeY()-1){
+    //     myPos.y=1;
+    // }
+
 }
 
