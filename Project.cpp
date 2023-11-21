@@ -59,6 +59,7 @@ void GetInput(void)
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
+    myPlayer->movePlayer();
 }
 
 void DrawScreen()
@@ -84,15 +85,11 @@ void DrawScreen()
                 { // Use to check when reaching end/beginning of rectangel in order to draw sides
                     MacUILib_printf("#");
                 }               
-        else if(i == myPos.y && j == myPos.x)
-        {
-            MacUILib_printf(myPos.symbol)
-        }             
-            else
-            {
-                MacUILib_printf(" ");                   //draw blanks in box
-            }
-        }
+                else
+                {
+                    MacUILib_printf(" ");                   //draw blanks in box
+                }
+    }
     MacUILib_printf("\n"); 
     }
 }
