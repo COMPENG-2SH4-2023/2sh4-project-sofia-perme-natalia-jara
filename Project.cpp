@@ -1,13 +1,17 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "GameMechs.h"
+#include "Player.h"
 
 
 using namespace std;
 
 #define DELAY_CONST 100000
 
-GameMechs* myGM;
+GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
+Player* myPlayer;
+
 
 void Initialize(void);
 void GetInput(void);
@@ -42,24 +46,32 @@ void Initialize(void)
     MacUILib_clearScreen();
     myPos.setObjPos(2,3,'@');
 
-    myGM = new GameMechs();
+    myGM = new GameMechs(); //need to delete from heap?
+    myPlayer = new Player(myGM);
     //exit flag removed because object myGM already has flag = false
 }
 
 void GetInput(void)
 {
-    myGM->getInput();
+    myGM->getInput(); //or should be setInput()?
 }
 
 void RunLogic(void)
 {
-    
+    myPlayer->updatePlayerDir();
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();  
-    MacUILib_printf("Object: <%d,%d> with %c\n",myPos.x, myPos.y,myPos.symbol); 
+
+    objPos tempPos;
+    myPlayer->getPlayerPos(tempPos);
+
+    MacUILib_printf("BoardSize: %dx%d,Player Pos: <%d, %d> + %c\n",
+                    myGM->getBoardSizeX(), 
+                    myGM->getBoardSizeY(),
+                    tempPos.x, tempPos.y, tempPos.symbol); 
 
 }
 
@@ -75,5 +87,5 @@ void CleanUp(void)
   
     MacUILib_uninit();
 
-    delete myGM; //not sure if correct
+    //delete myGM; //not sure if correct
 }

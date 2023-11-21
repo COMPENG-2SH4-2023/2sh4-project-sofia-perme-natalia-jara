@@ -62,4 +62,7 @@ void GameMechs::clearInput()
     input = 0;
 }
 
-
+// GameMechs::~GameMechs()
+// {
+//    delete myGM;
+// }
