@@ -61,7 +61,7 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
 }
 
-void DrawScreen(void)
+void DrawScreen()
 {
     MacUILib_clearScreen();  
 
@@ -80,21 +80,15 @@ void DrawScreen(void)
         for (int j=0;j<width;j++){
         if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
                 { // Use to check when reaching end/beginning of rectangel in order to draw sides
-                    printf("#");
-                }
-               else if (i == y && j == x)  //check to draw symbol
-               {
-                    printf("%c", symbol);
-                
-               }
-                
+                    MacUILib_printf("#");
+                }               
                 else
                 {
-                    printf(" ");                   //draw blanks in box
+                    MacUILib_printf(" ");                   //draw blanks in box
                 }
     }
+    MacUILib_printf("\n"); 
     }
-
 }
 
 void LoopDelay(void)
