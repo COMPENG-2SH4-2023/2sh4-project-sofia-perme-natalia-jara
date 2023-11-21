@@ -32,7 +32,7 @@ void Player::updatePlayerDir()
     //Where do I get the input where do I check for input
     //input-not by calling get char 
     // coordinate with teammemeber whos desining game mechanism
-    switch()
+    switch(input)
     {
         case 'w': // up
         case 'W':
