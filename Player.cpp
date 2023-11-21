@@ -7,7 +7,9 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.setObjPos(5,5,'@');
+    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,
+                        mainGameMechsRef->getBoardSizeY() / 2,
+                        '@');
 
     //no heap player yet; no new yet
 }
@@ -32,6 +34,7 @@ void Player::updatePlayerDir()
     //Where do I get the input where do I check for input
     //input-not by calling get char 
     // coordinate with teammemeber whos desining game mechanism
+    char input = mainGameMechsRef->getInput();
     switch(input)
     {
         case 'w': // up
