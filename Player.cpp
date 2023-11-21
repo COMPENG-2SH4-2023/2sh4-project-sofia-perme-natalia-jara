@@ -37,8 +37,12 @@ void Player::updatePlayerDir()
     // objPos myPos;
     GameMechs* myGM;
     char input = mainGameMechsRef->getInput();
+    // bool setExitTrue=mainGameMechsRef->setExitTrue();
     switch(input)
     {
+        case ' ':
+            mainGameMechsRef->setExitTrue();;    
+            break;
         case 'w': // up
         case 'W':
             if (myDir != DOWN)
