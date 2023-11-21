@@ -76,17 +76,23 @@ void DrawScreen()
     int height=myGM->getBoardSizeY();
     int width=myGM->getBoardSizeX();
     
-    for (int i=0;i<height;i++){
-        for (int j=0;j<width;j++){
+    for (int i=0;i<height;i++)
+    {
+        for (int j=0;j<width;j++)
+        {
         if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
                 { // Use to check when reaching end/beginning of rectangel in order to draw sides
                     MacUILib_printf("#");
                 }               
-                else
-                {
-                    MacUILib_printf(" ");                   //draw blanks in box
-                }
-    }
+        else if(i == myPos.y && j == myPos.x)
+        {
+            MacUILib_printf(myPos.symbol)
+        }             
+            else
+            {
+                MacUILib_printf(" ");                   //draw blanks in box
+            }
+        }
     MacUILib_printf("\n"); 
     }
 }
