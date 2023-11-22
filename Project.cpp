@@ -53,7 +53,7 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    myGM->getInput(); //or should be setInput()?
+    //myGM->getInput(); //or should be setInput()?
 }
 
 void RunLogic(void)
@@ -82,7 +82,7 @@ void DrawScreen()
         for (int j=0;j<width;j++)
         {
         if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
-                { // Use to check when reaching end/beginning of rectangel in order to draw sides
+                { // Use to check when reaching end/beginning of board in order to draw sides
                     MacUILib_printf("#");
                 }               
         else if (i==tempPos.y&& j==tempPos.x){

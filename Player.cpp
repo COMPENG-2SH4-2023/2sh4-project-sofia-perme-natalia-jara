@@ -35,7 +35,7 @@ void Player::updatePlayerDir()
     //input-not by calling get char 
     // coordinate with teammemeber whos desining game mechanism
     // objPos myPos;
-    GameMechs* myGM;
+    //GameMechs* myGM;
     char input = mainGameMechsRef->getInput();
     // bool setExitTrue=mainGameMechsRef->setExitTrue();
     switch(input)
@@ -75,7 +75,8 @@ void Player::updatePlayerDir()
             }
             break;
     }  
-    myGM -> clearInput();
+    //myGM -> clearInput();
+    mainGameMechsRef->clearInput();
 }
 
 void Player::movePlayer()
@@ -101,16 +102,20 @@ void Player::movePlayer()
         break;
     }
 
-     if (playerPos.x==mainGameMechsRef->getBoardSizeX()-1){
+    if (playerPos.x==mainGameMechsRef->getBoardSizeX()-1)
+    {
         playerPos.x=1;
     }
-    else if (playerPos.x==0){
+    else if (playerPos.x==0)
+    {
         playerPos.x=mainGameMechsRef->getBoardSizeX()-2;
     }
-    else if (playerPos.y==0){
+    else if (playerPos.y==0)
+    {
         playerPos.y=mainGameMechsRef->getBoardSizeY()-2;
     }
-    else if (playerPos.y==mainGameMechsRef->getBoardSizeY()-1){
+    else if (playerPos.y==mainGameMechsRef->getBoardSizeY()-1)
+    {
         playerPos.y=1;
     }
 
