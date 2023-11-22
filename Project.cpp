@@ -54,6 +54,11 @@ void Initialize(void)
 void GetInput(void)
 {
     //myGM->getInput(); //or should be setInput()?
+
+
+    //myGM->setInput()
+    
+
 }
 
 void RunLogic(void)
