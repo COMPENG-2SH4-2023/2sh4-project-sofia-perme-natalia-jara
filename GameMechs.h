@@ -41,8 +41,13 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
-      
 
+        int getScore();
+        void incrementScore();
+
+        bool getLoseFlagStatus();
+        bool setLoseFlag();
+      
 };
 
 #endif

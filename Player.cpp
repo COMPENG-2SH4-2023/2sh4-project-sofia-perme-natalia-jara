@@ -74,8 +74,9 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
+
     }  
-    //myGM -> clearInput();
+
     mainGameMechsRef->clearInput();
 }
 
