@@ -41,7 +41,7 @@ void Player::updatePlayerDir()
     switch(input)
     {
         case ' ':
-            mainGameMechsRef->setExitTrue();;    
+            mainGameMechsRef->setExitTrue();   
             break;
         case 'w': // up
         case 'W':
