@@ -1,12 +1,10 @@
 #include "Food.h"
 #include "MacUILib.h"
+#include <time.h>
 
 Food::Food()
 {
-    foodPos = objPos();
-    foodPos.x = 0;
-    foodPos.y = 0;
-    foodPos.symbol = '0';
+    foodPos.setObjPos(-1, -1, 'o');
 }
 
 Food::~Food()
@@ -16,13 +14,15 @@ Food::~Food()
 
 void Food::generateFood(objPos blockOff)
 {
+
+    srand(time(NULL));
     int xVal;
     int yVal;
 
     while(true)
     {
-        xVal = rand() % 28 + 1;
-        yVal = rand() % 13 + 1;
+        xVal = rand() % (30-2) + 1;
+        yVal = rand() % (15-2) + 1;
 
         MacUILib_printf("x val is %d, ", xVal);
         MacUILib_printf("y val is %d\n", yVal);

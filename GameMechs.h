@@ -16,7 +16,7 @@ class GameMechs
 
     // Only some sample members are included here
 
-    // You will include more data members and member functions to complete your design.
+    // You will include more data members and member functions to complete your design. 
 
     private:
         char input;
@@ -26,7 +26,6 @@ class GameMechs
         
         int boardSizeX;
         int boardSizeY;
-        // objPos foodObj;
 
     public:
         GameMechs();

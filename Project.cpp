@@ -4,6 +4,7 @@
 #include "GameMechs.h"
 #include "Player.h"
 #include "Food.h"
+#include <time.h>
 
 
 using namespace std;
@@ -52,22 +53,34 @@ void Initialize(void)
     myPlayer = new Player(myGM);
     myFood = new Food();
     //exit flag removed because object myGM already has flag = false
+
+    objPos playerPos;
+    objPos foodPos;
+    myPlayer->getPlayerPos(playerPos);
+    myFood->generateFood(playerPos);
+
 }
 
 void GetInput(void)
 {
-    //myGM->getInput(); //or should be setInput()?
-
-
-    //myGM->setInput()
     
-
 }
 
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
+
+    // char set = myGM->getInput();
+
+    // if(set == 'h' || set == 'H')
+    // {
+    //     objPos playerPos;
+    //     objPos foodPos;
+    //     myPlayer->getPlayerPos(playerPos);
+    //     myFood->generateFood(playerPos);
+    // }
+
 }
 
 void DrawScreen()
@@ -77,7 +90,7 @@ void DrawScreen()
     objPos playerPos;
     objPos foodPos;
     myPlayer->getPlayerPos(playerPos);
-    myFood->generateFood(playerPos);
+    //myFood->generateFood(playerPos);
     myFood->getFoodPos(foodPos);
 
     MacUILib_printf("BoardSize: %dx%d,Player Pos: <%d, %d> + %c\n",
@@ -116,6 +129,7 @@ void DrawScreen()
     }
     MacUILib_printf("Score: %d",myGM->getScore());
     MacUILib_printf("\nLose flag: %d",myGM->getLoseFlagStatus());
+    MacUILib_printf("\nFood Pos: <%d, %d>, + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
 }
 
 void LoopDelay(void)
