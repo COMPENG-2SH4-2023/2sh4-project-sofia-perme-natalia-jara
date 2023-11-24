@@ -99,7 +99,10 @@ void DrawScreen()
                 }
     }
     MacUILib_printf("\n"); 
+    
     }
+    MacUILib_printf("Score: %d",myGM->getScore());
+    MacUILib_printf("\nLose flag: %d",myGM->getLoseFlagStatus());
 }
 
 void LoopDelay(void)

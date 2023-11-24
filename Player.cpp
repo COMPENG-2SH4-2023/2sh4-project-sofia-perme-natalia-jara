@@ -41,7 +41,7 @@ void Player::updatePlayerDir()
     switch(input)
     {
         case ' ':
-            mainGameMechsRef->setExitTrue();;    
+            mainGameMechsRef->setExitTrue();   
             break;
         case 'w': // up
         case 'W':
@@ -74,7 +74,15 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
+        case 'p':
+        case 'P':
+            mainGameMechsRef->incrementScore();
+            break;
 
+        case 'k':
+        case 'K':
+            mainGameMechsRef->setLoseFlag();
+            break;
     }  
 
     mainGameMechsRef->clearInput();

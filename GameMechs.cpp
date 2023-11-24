@@ -4,6 +4,8 @@
 GameMechs::GameMechs()
 {
     input = 0;
+    score = 0;
+    loseFlag = 0;
     exitFlag = false;
     boardSizeX = 30; //default board size as recommended in manual
     boardSizeY = 15;
@@ -12,6 +14,8 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
     input = 0;
+    score = 0;
+    loseFlag = 0;
     exitFlag = false;
     boardSizeX = boardX;
     boardSizeY = boardY;
@@ -70,24 +74,24 @@ GameMechs::~GameMechs()
 int GameMechs::getScore()
 {
     return score;
-    MacUILib_printf("Score: ", score);
+    //MacUILib_printf("Score: ", score);
 
 }
 
 void GameMechs::incrementScore()
 {
     score++;
-    MacUILib_printf("Score: ", score);
+    //MacUILib_printf("Score: ", score);
 }
 
 bool GameMechs::getLoseFlagStatus()
 {
     return loseFlag;
-    MacUILib_printf("You lose");
+    //MacUILib_printf("You lose");
 }
 
 bool GameMechs::setLoseFlag()
 {
     loseFlag = true;
-    MacUILib_printf("You lose");
+    //MacUILib_printf("You lose");
 }
