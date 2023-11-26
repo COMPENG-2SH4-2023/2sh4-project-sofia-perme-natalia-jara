@@ -23,7 +23,7 @@ class Food
 
         void generateFood(objPos blockOff);
         void getFoodPos(objPos &returnPos);
-        void regenerateFood(); //new food location is generated when debug key is pressed (iteration 2B)
+        //void regenerateFood(); //new food location is generated when debug key is pressed (iteration 2B)
       
 };
 
