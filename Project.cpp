@@ -12,7 +12,7 @@ using namespace std;
 #define DELAY_CONST 100000
 
 GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
-Player* myPlayer;
+Player* myPlayer; //should i move these heap variables into their respective classes?
 Food* myFood;
 
 
@@ -55,7 +55,7 @@ void Initialize(void)
     //exit flag removed because object myGM already has flag = false
 
     objPos playerPos;
-    objPos foodPos;
+
     myPlayer->getPlayerPos(playerPos);
     myFood->generateFood(playerPos);
 
@@ -71,15 +71,10 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
-    // char set = myGM->getInput();
+    //myFood->regenerateFood();
 
-    // if(set == 'h' || set == 'H')
-    // {
-    //     objPos playerPos;
-    //     objPos foodPos;
-    //     myPlayer->getPlayerPos(playerPos);
-    //     myFood->generateFood(playerPos);
-    // }
+    //myGM->clearInput();
+
 
 }
 
@@ -87,19 +82,19 @@ void DrawScreen()
 {
     MacUILib_clearScreen();  
 
-    objPos playerPos;
-    objPos foodPos;
-    myPlayer->getPlayerPos(playerPos);
-    //myFood->generateFood(playerPos);
-    myFood->getFoodPos(foodPos);
+    objPos tempPlayer;
+    myPlayer->getPlayerPos(tempPlayer);
+
+    objPos tempFood;
+    myFood->getFoodPos(tempFood);
 
     MacUILib_printf("BoardSize: %dx%d,Player Pos: <%d, %d> + %c\n",
                     myGM->getBoardSizeX(), 
                     myGM->getBoardSizeY(),
-                    playerPos.x, playerPos.y, playerPos.symbol); 
+                    tempPlayer.x, tempPlayer.y, tempPlayer.symbol); 
 
-    int height=myGM->getBoardSizeY();
-    int width=myGM->getBoardSizeX();
+    int height = myGM->getBoardSizeY();
+    int width = myGM->getBoardSizeX();
     
     for (int i=0;i<height;i++)
     {
@@ -107,21 +102,21 @@ void DrawScreen()
         {
         if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
         { // Use to check when reaching end/beginning of board in order to draw sides
-            MacUILib_printf("#");
+            MacUILib_printf("%c", '#');
         }               
-        else if (i == playerPos.y && j == playerPos.x)
+        else if (i == tempPlayer.y && j == tempPlayer.x)
         {
-            MacUILib_printf("%c", playerPos.symbol);
+            MacUILib_printf("%c", tempPlayer.symbol);
         }
 
-        else if (i == foodPos.y && j == foodPos.x)
+        else if (i == tempFood.y && j == tempFood.x)
         {
-            MacUILib_printf("%c", foodPos.symbol);
+            MacUILib_printf("%c", tempFood.symbol);
         }
 
         else
         {
-            MacUILib_printf(" ");                   //draw blanks in box
+            MacUILib_printf("%c", ' ');                   //draw blanks in box
         }
     }
     MacUILib_printf("\n"); 
@@ -129,7 +124,7 @@ void DrawScreen()
     }
     MacUILib_printf("Score: %d",myGM->getScore());
     MacUILib_printf("\nLose flag: %d",myGM->getLoseFlagStatus());
-    MacUILib_printf("\nFood Pos: <%d, %d>, + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
+    MacUILib_printf("\nFood Pos: <%d, %d>, + %c\n", tempFood.x, tempFood.y, tempFood.symbol);
 }
 
 void LoopDelay(void)

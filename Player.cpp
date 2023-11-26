@@ -84,15 +84,6 @@ void Player::updatePlayerDir()
             mainGameMechsRef->setLoseFlag();
             break;
 
-        // case 'l':
-        // case 'L':
-        //     objPos playerPos;
-        //     objPos foodPos;
-        //     getPlayerPos(playerPos);
-        //     mainFoodRef->generateFood(playerPos);
-        //     mainFoodRef->getFoodPos(foodPos);
-        //     break;
-
     }  
 
     mainGameMechsRef->clearInput();
