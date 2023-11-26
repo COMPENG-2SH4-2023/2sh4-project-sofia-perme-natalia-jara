@@ -30,7 +30,7 @@ class Player
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
-        //Food* mainFoodRef;
+        // Food* mainFoodRef;
 };
 
 #endif

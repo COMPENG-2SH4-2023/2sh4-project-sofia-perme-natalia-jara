@@ -63,13 +63,27 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    
+    myGM -> getInput();
 }
 
 void RunLogic(void)
 {
+    objPos playerPos;
+    objPos foodPos;
+
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
+
+    myGM -> clearInput();
+
+    myPlayer->getPlayerPos (playerPos);
+    myFood -> getFoodPos(foodPos);
+
+    if (playerPos.x==foodPos.x && playerPos.y==foodPos.y){
+        myFood->generateFood(playerPos);
+        myGM -> incrementScore();
+
+    }
 
     // char set = myGM->getInput();
 
