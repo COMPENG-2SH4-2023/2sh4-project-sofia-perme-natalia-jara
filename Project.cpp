@@ -10,9 +10,10 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-GameMechs *myGM; // should i be using destructor function to remove from heap or just delete call?
-Player *myPlayer;
-Food *myFood;
+GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
+Player* myPlayer;//should i move these heap variables into their respective classes?
+Food* myFood;
+
 
 void Initialize(void);
 void GetInput(void);

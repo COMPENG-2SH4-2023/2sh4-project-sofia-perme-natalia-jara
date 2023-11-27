@@ -79,24 +79,15 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
-        case 'p':
-        case 'P':
-            mainGameMechsRef->incrementScore();
-            break;
+        // case 'p':
+        // case 'P':
+        //     mainGameMechsRef->incrementScore();
+        //     break;
 
         case 'k':
         case 'K':
             mainGameMechsRef->setLoseFlag();
             break;
-
-        // case 'l':
-        // case 'L':
-        //     objPos playerPos;
-        //     objPos foodPos;
-        //     getPlayerPos(playerPos);
-        //     mainFoodRef->generateFood(playerPos);
-        //     mainFoodRef->getFoodPos(foodPos);
-        //     break;
 
     }  
 

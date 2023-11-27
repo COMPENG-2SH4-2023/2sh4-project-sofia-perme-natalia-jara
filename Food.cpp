@@ -4,6 +4,7 @@
 
 Food::Food()
 {
+    //mainGameMechsRef = thisGMRef;
     foodPos.setObjPos(-1, -1, 'o');
 }
 
@@ -16,6 +17,7 @@ void Food::generateFood(objPos blockOff)
 {
 
     srand(time(NULL));
+
     int xVal;
     int yVal;
 
@@ -37,9 +39,24 @@ void Food::generateFood(objPos blockOff)
 
 }
 
+// void Food::regenerateFood()
+// {
+//     char input = mainGameMechsRef->getInput();
+
+//     switch(input)
+//     {
+//         case 'h':
+//             generateFood(foodPos);
+//             break;
+//     }
+//     mainGameMechsRef->clearInput();
+// }
+
 void Food::getFoodPos(objPos &returnPos)
 {
-    returnPos.x = foodPos.x;
-    returnPos.y = foodPos.y;
-    returnPos.symbol = foodPos.symbol;
+    // returnPos.x = foodPos.x;
+    // returnPos.y = foodPos.y;
+    // returnPos.symbol = foodPos.symbol;
+
+    returnPos.setObjPos(foodPos.x,foodPos.y,foodPos.symbol);
 }
