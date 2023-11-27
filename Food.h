@@ -19,7 +19,7 @@ class Food
         Food();
         ~Food();
 
-        void generateFood(objPos blockOff);
+        void generateFood(objPos blockOff);// need to upgrade this
         void getFoodPos(objPos &returnPos);
       
 };

@@ -7,9 +7,13 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,
-                        mainGameMechsRef->getBoardSizeY() / 2,
+    objPos tempPos;
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,
+                        mainGameMechsRef->getBoardSizeY() / 2,      //possible to write in simpler way--research way
                         '@');
+
+    playerPosList=new objPosArrayList();
+    playerPosList->insertHead(tempPos);
 
     //no heap player yet; no new yet
 }
@@ -19,12 +23,13 @@ Player::~Player()
 {
     // delete any heap members here
     //can leave empty for now
+    delete playerPosList; //do not need a square breacket since we only have one
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+objPosArrayList* Player::getPlayerPos()
 {
     // return the reference to the playerPos arrray list
-    returnPos.setObjPos(playerPos.x,playerPos.y,playerPos.symbol);
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -102,41 +107,48 @@ void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
 
+    objPos newHead;
+    objPos currHead;   //holdingh pos info of current head
+    playerPosList->getHeadElement(currHead);
 
      switch (myDir)
     {
     case UP:
-        playerPos.y--;
+        currHead.y--;
         break;
     case DOWN:
-        playerPos.y++;
+        currHead.y++;
         break;
     case LEFT:
-        playerPos.x--;
+        currHead.x--;
         break;
     case RIGHT:
-        playerPos.x++;
+        currHead.x++;
         break;
     case STOP:
         break;
     }
 
-    if (playerPos.x==mainGameMechsRef->getBoardSizeX()-1)
+    if (currHead.x==mainGameMechsRef->getBoardSizeX()-1)
     {
-        playerPos.x=1;
+        currHead.x=1;
     }
-    else if (playerPos.x==0)
+    else if (currHead.x==0)
     {
-        playerPos.x=mainGameMechsRef->getBoardSizeX()-2;
+        currHead.x=mainGameMechsRef->getBoardSizeX()-2;
     }
-    else if (playerPos.y==0)
+    else if (currHead.y==0)
     {
-        playerPos.y=mainGameMechsRef->getBoardSizeY()-2;
+        currHead.y=mainGameMechsRef->getBoardSizeY()-2;
     }
-    else if (playerPos.y==mainGameMechsRef->getBoardSizeY()-1)
+    else if (currHead.y==mainGameMechsRef->getBoardSizeY()-1)
     {
-        playerPos.y=1;
+        currHead.y=1;
     }
 
+    //new current head should be insertedto the head of the list
+    playerPosList->insertHead(currHead);
+    // then remove tail
+    playerPosList->removeTail();
 }
 

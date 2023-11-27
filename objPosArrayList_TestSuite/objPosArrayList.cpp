@@ -1,5 +1,7 @@
 #include "objPosArrayList.h"
 #include <stdexcept>
+#include <iostream>
+using namespace std;
 
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.
@@ -47,17 +49,23 @@ void objPosArrayList::insertTail(objPos thisPos)
 
 void objPosArrayList::removeHead()
 {
-    for (int i=0;i<listSize-1;i++)
+    if (listSize>0)
     {
-        aList[i].setObjPos(aList[i+1]);
-    }
+        for (int i=0;i<listSize-1;i++)
+        {
+            aList[i].setObjPos(aList[i+1]);
+        }
 
-    listSize--;
+        listSize--;
+    }
 }
 
 void objPosArrayList::removeTail()
 {
-    listSize--;
+    if (listSize>0)
+    {
+        listSize--;
+    }
 }
 
 void objPosArrayList::getHeadElement(objPos &returnPos)
@@ -73,10 +81,10 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
-    if (index < 0 || index > listSize)
+    if (index < 0)
     {
         throw std::out_of_range("Invalid indexes.");
-        // printf("index is:%d",index);
+        // cerr << "\nlistSize: " << listSize << "  invalid index: " << index;
     }
     return returnPos.setObjPos(aList[index]);
 }
