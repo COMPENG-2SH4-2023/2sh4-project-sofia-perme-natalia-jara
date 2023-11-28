@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "Food.h"
+#include "MacUILib.h"
+#include <iostream>
 
 
 Player::Player(GameMechs* thisGMRef)
@@ -100,10 +102,11 @@ void Player::movePlayer(Food* myFood)
 {
     // PPA3 Finite State Machine logic
 
-    objPos newHead;
+    objPos tempPos;
 
     objPos currHead;   //holdingh pos info of current head
     playerPosList->getHeadElement(currHead);
+    
 
     objPos tempFood;
     myFood->getFoodPos(tempFood);
@@ -153,6 +156,20 @@ void Player::movePlayer(Food* myFood)
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
     }
+
+    int size=playerPosList->getSize();
+    for (int i=1;i<size;i++)
+    {
+        playerPosList->getElement(tempPos,i);
+        if(currHead.x==tempPos.x && currHead.y==tempPos.y)
+        {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+        }
+
+    }
+
+
 
     
 
