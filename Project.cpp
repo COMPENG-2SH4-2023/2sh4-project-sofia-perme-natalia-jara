@@ -9,8 +9,8 @@
 using namespace std;
 
 // #define DELAY_CONST 100000 
-#define DELAY_CONST 3
-00000 
+#define DELAY_CONST 200000
+
 
 GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
 Player* myPlayer;//should i move these heap variables into their respective classes?
@@ -167,8 +167,17 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     // MacUILib_clearScreen();
-
-    MacUILib_uninit();
+    if (myGM->getLoseFlagStatus()==false)
+    {
+        MacUILib_printf("\nEXIT GAME");
+        MacUILib_uninit();
+    }
+     if (myGM->getLoseFlagStatus()==true)
+     {
+        MacUILib_printf("\nEXIT GAME");
+        MacUILib_printf("\nYOU LOST");
+        MacUILib_uninit();
+     }
 
     delete myGM;
     delete myPlayer;

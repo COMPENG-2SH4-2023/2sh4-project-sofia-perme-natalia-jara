@@ -53,6 +53,7 @@ int GameMechs::getBoardSizeY()
 
 void GameMechs::setExitTrue()
 {
+    
     exitFlag = true;
 }
 
