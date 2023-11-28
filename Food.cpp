@@ -20,14 +20,19 @@ void Food::generateFood(objPos blockOff)
 
     int xVal;
     int yVal;
+    int size;
 
     while(true)
     {
+        // size=playerPosList->getSize();
+
+
         xVal = rand() % (30-2) + 1;
         yVal = rand() % (15-2) + 1;
 
         MacUILib_printf("x val is %d, ", xVal);
         MacUILib_printf("y val is %d\n", yVal);
+
 
         if(xVal != blockOff.x && yVal != blockOff.y)
         {

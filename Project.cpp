@@ -47,14 +47,14 @@ void Initialize(void)
     // myPos.setObjPos(2,3,'@');
 
     myGM = new GameMechs(); // need to delete from heap?
-    myPlayer = new Player(myGM);
+    myPlayer = new Player(myGM,myFood);
     myFood = new Food();
     // exit flag removed because object myGM already has flag = false
 
     objPos playerPos;
     // objPos foodPos;
     // myPlayer->getPlayerPos();
-    myFood->generateFood(playerPos);
+    myFood->generateFood(myPos);
 }
 
 void GetInput(void)
@@ -75,11 +75,13 @@ void RunLogic(void)
     myPlayer->getPlayerPos();
     myFood->getFoodPos(foodPos);
 
-    if (playerPos.x == foodPos.x && playerPos.y == foodPos.y)
-    {
-        myFood->generateFood(playerPos);
-        myGM->incrementScore();
-    }
+
+
+    // if (playerPos.x == foodPos.x && playerPos.y == foodPos.y)
+    // {
+    //     myFood->generateFood(playerPos);
+    //     myGM->incrementScore();
+    // }
 
     // char set = myGM->getInput();
 
@@ -137,10 +139,10 @@ void DrawScreen()
                 MacUILib_printf("#");
             }
 
-            else if (i == foodPos.y && j == foodPos.x)
-            {
-                MacUILib_printf("%c", foodPos.symbol);
-            }
+            // else if ()
+            // {
+            //     MacUILib_printf("%c", foodPos.symbol);
+            // }
 
 
             else

@@ -1,9 +1,10 @@
 #include "Player.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* foodRef)
 {
     mainGameMechsRef = thisGMRef;
+    mainFoodRef=foodRef;
     myDir = STOP;
 
     // more actions to be included
@@ -14,8 +15,12 @@ Player::Player(GameMechs* thisGMRef)
 
     playerPosList=new objPosArrayList();
     playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+
+
+
+
     //no heap player yet; no new yet
 }
 
@@ -101,6 +106,7 @@ void Player::movePlayer()
 
     objPos newHead;
     objPos currHead;   //holdingh pos info of current head
+    objPos foodPos;
     playerPosList->getHeadElement(currHead);
 
      switch (myDir)
@@ -142,5 +148,16 @@ void Player::movePlayer()
     playerPosList->insertHead(currHead);
     // then remove tail
     playerPosList->removeTail();
+
+
+    /////
+
+    // if (currHead.x==foodPos.x && currHead.y== foodPos.y)
+    // {
+    //     playerPosList->insertHead(currHead);
+    //     foodPosList->generateFood(currHead);
+    // }
+
+
 }
 

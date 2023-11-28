@@ -21,7 +21,9 @@ class Food
         Food();
         ~Food();
 
-        void generateFood(objPos blockOff);// need to upgrade this
+        objPosArrayList* playerPosList();
+
+        void generateFood(objPos blockOff);// need to upgrade this//currently calling objPos constructor
         void getFoodPos(objPos &returnPos);
         //void regenerateFood(); //new food location is generated when debug key is pressed (iteration 2B)
       
