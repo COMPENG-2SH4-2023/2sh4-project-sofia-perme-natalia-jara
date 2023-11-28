@@ -15,13 +15,13 @@ class Food
 {
     private:
         objPos foodPos;
-        //GameMechs* mainGameMechsRef;
+        GameMechs* mainGameMechsRef;
 
     public:
-        Food();
+        Food(GameMechs* thisGMRef);
         ~Food();
 
-        void generateFood(objPos blockOff);// need to upgrade this
+        void generateFood(objPosArrayList* blockOffList);// need to upgrade this
         void getFoodPos(objPos &returnPos);
         //void regenerateFood(); //new food location is generated when debug key is pressed (iteration 2B)
       

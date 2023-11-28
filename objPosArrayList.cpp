@@ -6,9 +6,9 @@
 
 objPosArrayList::objPosArrayList()
 {
-    aList=new objPos[ARRAY_MAX_CAP];
-    listSize=0;
-    arrayCapacity=ARRAY_MAX_CAP;
+    aList = new objPos[ARRAY_MAX_CAP];
+    listSize = 0;
+    arrayCapacity = ARRAY_MAX_CAP;
 }
 
 objPosArrayList::~objPosArrayList()
@@ -23,7 +23,7 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    for (int i=listSize;i>0;i--)
+    for (int i = listSize; i > 0; i--)
     {
         aList[i].setObjPos(aList[i-1]);
     }
