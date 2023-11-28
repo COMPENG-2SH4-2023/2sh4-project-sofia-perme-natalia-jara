@@ -17,7 +17,7 @@ class Player
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
 
-        Player(GameMechs* thisGMRef,Food* foodRef);
+        Player(GameMechs* thisGMRef);
         ~Player();
 
         objPosArrayList* getPlayerPos(); // Upgrade this in iteration 3.

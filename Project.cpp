@@ -132,10 +132,10 @@ void DrawScreen()
                 MacUILib_printf("%s","#");
             }
 
-            // else if ()
-            // {
-            //     MacUILib_printf("%c", foodPos.symbol);
-            // }
+            else if (i==foodPos.y && j==foodPos.x)
+            {
+                MacUILib_printf("%c", foodPos.symbol);
+            }
 
 
             else

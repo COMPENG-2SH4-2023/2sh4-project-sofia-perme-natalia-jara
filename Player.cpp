@@ -2,7 +2,7 @@
 #include "Food.h"
 
 
-Player::Player(GameMechs* thisGMRef, Food* foodRef)
+Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     //mainFoodRef = thisFoodRef;
@@ -17,10 +17,6 @@ Player::Player(GameMechs* thisGMRef, Food* foodRef)
     playerPosList->insertHead(tempPos);
     // playerPosList->insertHead(tempPos);
     // playerPosList->insertHead(tempPos);
-
-
-
-
     //no heap player yet; no new yet
 }
 
@@ -107,7 +103,6 @@ void Player::movePlayer(Food* myFood)
     objPos newHead;
 
     objPos currHead;   //holdingh pos info of current head
-    objPos foodPos;
     playerPosList->getHeadElement(currHead);
 
     objPos tempFood;
@@ -147,7 +142,7 @@ void Player::movePlayer(Food* myFood)
     {
         currHead.y=1;
     }
-    else if(tempFood.x == currHead.x && tempFood.y == currHead.y)
+    if(tempFood.x == currHead.x && tempFood.y == currHead.y)
     {
         playerPosList->insertHead(currHead);
         mainGameMechsRef->incrementScore();
@@ -158,22 +153,11 @@ void Player::movePlayer(Food* myFood)
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
     }
+
     
 
     //new current head should be insertedto the head of the list
-    playerPosList->insertHead(currHead);
+    // playerPosList->insertHead(currHead);
     // then remove tail
-    playerPosList->removeTail();
-
-
-    /////
-
-    // if (currHead.x==foodPos.x && currHead.y== foodPos.y)
-    // {
-    //     playerPosList->insertHead(currHead);
-    //     foodPosList->generateFood(currHead);
-    // }
-
-
+    // playerPosList->removeTail();
 }
-
