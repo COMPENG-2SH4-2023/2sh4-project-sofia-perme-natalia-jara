@@ -1,19 +1,19 @@
 #include "Player.h"
+#include "Food.h"
 
 
 Player::Player(GameMechs* thisGMRef, Food* foodRef)
 {
     mainGameMechsRef = thisGMRef;
-    mainFoodRef=foodRef;
+    //mainFoodRef = thisFoodRef;
     myDir = STOP;
 
     // more actions to be included
     objPos tempPos;
-    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,
-                        mainGameMechsRef->getBoardSizeY() / 2,      //possible to write in simpler way--research way
-                        '@');
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '@');     //possible to write in simpler way--research way
 
     playerPosList=new objPosArrayList();
+
     playerPosList->insertHead(tempPos);
     // playerPosList->insertHead(tempPos);
     // playerPosList->insertHead(tempPos);
@@ -97,17 +97,21 @@ void Player::updatePlayerDir()
 
     }  
 
-    mainGameMechsRef->clearInput();
+    mainGameMechsRef->clearInput(); //clear input buffer
 }
 
-void Player::movePlayer()
+void Player::movePlayer(Food* myFood)
 {
     // PPA3 Finite State Machine logic
 
     objPos newHead;
+
     objPos currHead;   //holdingh pos info of current head
     objPos foodPos;
     playerPosList->getHeadElement(currHead);
+
+    objPos tempFood;
+    myFood->getFoodPos(tempFood);
 
      switch (myDir)
     {
@@ -143,6 +147,18 @@ void Player::movePlayer()
     {
         currHead.y=1;
     }
+    else if(tempFood.x == currHead.x && tempFood.y == currHead.y)
+    {
+        playerPosList->insertHead(currHead);
+        mainGameMechsRef->incrementScore();
+        myFood->generateFood(playerPosList);
+    }
+    else //if no collision detected
+    {
+        playerPosList->insertHead(currHead);
+        playerPosList->removeTail();
+    }
+    
 
     //new current head should be insertedto the head of the list
     playerPosList->insertHead(currHead);

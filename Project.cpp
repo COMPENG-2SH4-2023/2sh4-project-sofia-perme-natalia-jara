@@ -46,15 +46,17 @@ void Initialize(void)
     MacUILib_clearScreen();
     // myPos.setObjPos(2,3,'@');
 
-    myGM = new GameMechs(); // need to delete from heap?
-    myPlayer = new Player(myGM,myFood);
-    myFood = new Food();
+    myGM = new GameMechs(20,10); // need to delete from heap?
+    myPlayer = new Player(myGM);
+    myFood = new Food(myGM);
     // exit flag removed because object myGM already has flag = false
 
     objPos playerPos;
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+
     // objPos foodPos;
     // myPlayer->getPlayerPos();
-    myFood->generateFood(myPos);
+    myFood->generateFood(playerBody);
 }
 
 void GetInput(void)
@@ -68,42 +70,32 @@ void RunLogic(void)
     objPos foodPos;
 
     myPlayer->updatePlayerDir();
-    myPlayer->movePlayer();
+    myPlayer->movePlayer(myFood);
 
     myGM->clearInput();
 
     myPlayer->getPlayerPos();
     myFood->getFoodPos(foodPos);
 
-
-
-    // if (playerPos.x == foodPos.x && playerPos.y == foodPos.y)
-    // {
-    //     myFood->generateFood(playerPos);
-    //     myGM->incrementScore();
-    // }
-
-    // char set = myGM->getInput();
-
-    // if(set == 'h' || set == 'H')
-    // {
-    //     objPos playerPos;
-    //     objPos foodPos;
-    //     myPlayer->getPlayerPos(playerPos);
-    //     myFood->generateFood(playerPos);
-    // }
 }
 
 void DrawScreen()
 {
     MacUILib_clearScreen();
 
-    objPosArrayList *playerBody = myPlayer->getPlayerPos();
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    // objPos printPlayer;
+    // playerBody->getHeadElement(printPlayer);
     objPos tempBody;
+
     objPos foodPos;
+    myFood->getFoodPos(foodPos);
+
+    bool drawn;
+
     // myPlayer->getPlayerPos();
     // myFood->generateFood(playerPos);
-    myFood->getFoodPos(foodPos);
+    //myFood->getFoodPos(foodPos);
 
     // MacUILib_printf("BoardSize: %dx%d,Player Pos: <%d, %d> + %c\n",
     //                 myGM->getBoardSizeX(),
@@ -113,17 +105,18 @@ void DrawScreen()
     int height = myGM->getBoardSizeY();
     int width = myGM->getBoardSizeX();
     int snakeSize = playerBody->getSize();
-    bool drawn;
-
+    
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-        drawn=false;
+            drawn = false;
+
             for (int k = 0; k < snakeSize; k++)
             {
                 playerBody->getElement(tempBody, k);
-                if (j==tempBody.x  && i==tempBody.y)
+
+                if (j == tempBody.x  && i == tempBody.y)
                 {
                     MacUILib_printf("%c", tempBody.symbol);
                     drawn = true;
@@ -132,11 +125,11 @@ void DrawScreen()
                 // if (drawn) continue;
             }
 
-            
+            if(drawn) continue;
             
             if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
             { // Use to check when reaching end/beginning of board in order to draw sides
-                MacUILib_printf("#");
+                MacUILib_printf("%s","#");
             }
 
             // else if ()
@@ -147,14 +140,16 @@ void DrawScreen()
 
             else
             {
-                if (!drawn)
-                {
+                MacUILib_printf("%s"," ");
 
-                    MacUILib_printf("%c", ' '); // draw blanks in box
-                }
+                // if (!drawn)
+                // {
+
+                //     MacUILib_printf("%c", ' '); // draw blanks in box
+                // }
             }
         }
-        MacUILib_printf("\n");
+        MacUILib_printf("%s", "\n");
     }
     MacUILib_printf("Score: %d", myGM->getScore());
     MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());
