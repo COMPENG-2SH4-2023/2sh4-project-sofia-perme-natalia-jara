@@ -50,10 +50,5 @@ void Food::generateFood(objPosArrayList* blockOffList)
 
 void Food::getFoodPos(objPos &returnPos)
 {
-    // returnPos.x = foodPos.x;
-    // returnPos.y = foodPos.y;
-    // returnPos.symbol = foodPos.symbol;
-
-    //returnPos.setObjPos(foodPos.x,foodPos.y,foodPos.symbol);
     returnPos = foodPos;
 }

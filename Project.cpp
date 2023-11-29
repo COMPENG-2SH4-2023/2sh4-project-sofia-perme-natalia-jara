@@ -11,11 +11,9 @@ using namespace std;
 // #define DELAY_CONST 100000 
 #define DELAY_CONST 200000
 
-
 GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
 Player* myPlayer;//should i move these heap variables into their respective classes?
 Food* myFood;
-
 
 void Initialize(void);
 void GetInput(void);
@@ -46,7 +44,6 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    // myPos.setObjPos(2,3,'@');
 
     myGM = new GameMechs(20,10); // need to delete from heap?
     myPlayer = new Player(myGM);
@@ -56,8 +53,6 @@ void Initialize(void)
     objPos playerPos;
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
 
-    // objPos foodPos;
-    // myPlayer->getPlayerPos();
     myFood->generateFood(playerBody);
 }
 
@@ -86,23 +81,13 @@ void DrawScreen()
     MacUILib_clearScreen();
 
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
-    // objPos printPlayer;
-    // playerBody->getHeadElement(printPlayer);
+
     objPos tempBody;
 
     objPos foodPos;
     myFood->getFoodPos(foodPos);
 
     bool drawn;
-
-    // myPlayer->getPlayerPos();
-    // myFood->generateFood(playerPos);
-    //myFood->getFoodPos(foodPos);
-
-    // MacUILib_printf("BoardSize: %dx%d,Player Pos: <%d, %d> + %c\n",
-    //                 myGM->getBoardSizeX(),
-    //                 myGM->getBoardSizeY(),
-    //                 playerPos.x, playerPos.y, playerPos.symbol);
 
     int height = myGM->getBoardSizeY();
     int width = myGM->getBoardSizeX();
@@ -143,12 +128,6 @@ void DrawScreen()
             else
             {
                 MacUILib_printf("%s"," ");
-
-                // if (!drawn)
-                // {
-
-                //     MacUILib_printf("%c", ' '); // draw blanks in box
-                // }
             }
         }
         MacUILib_printf("%s", "\n");
