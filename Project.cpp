@@ -157,6 +157,15 @@ void DrawScreen()
     MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());
     MacUILib_printf("\nFood Pos: <%d, %d>, + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
 
+    if (myGM->getLoseFlagStatus()==false && myGM->getExitFlagStatus()==true)
+    {
+        MacUILib_printf("\nEXIT GAME.");
+    }
+
+    if (myGM->getLoseFlagStatus()==true)
+    {
+        MacUILib_printf("\nSNAKE RAN INTO ITSELF... YOU LOSE!");
+    }
 }
 
 void LoopDelay(void)
@@ -167,17 +176,8 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     // MacUILib_clearScreen();
-    if (myGM->getLoseFlagStatus()==false)
-    {
-        MacUILib_printf("\nEXIT GAME");
-        MacUILib_uninit();
-    }
-     if (myGM->getLoseFlagStatus()==true)
-     {
-        MacUILib_printf("\nEXIT GAME");
-        MacUILib_printf("\nYOU LOST");
-        MacUILib_uninit();
-     }
+
+    MacUILib_uninit();
 
     delete myGM;
     delete myPlayer;
