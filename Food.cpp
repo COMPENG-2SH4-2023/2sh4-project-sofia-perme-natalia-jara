@@ -21,56 +21,32 @@ void Food::generateFood(objPosArrayList* blockOffList)
 
     srand(time(NULL));
 
-    bool drawn;
+    bool drawn=true;
     int xVal;
     int yVal;
     objPos playerTemp;
 
-    while(true)
+    while(drawn)
     {
         drawn = false;
 
         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
 
-        // MacUILib_printf("x val is %d, ", xVal);
-        // MacUILib_printf("y val is %d\n", yVal);
-
         for(int i = 0; i < blockOffList->getSize(); i++)
         {
             blockOffList->getElement(playerTemp, i);
 
-            if(xVal != playerTemp.x && yVal != playerTemp.y)
+            if(xVal == playerTemp.x && yVal == playerTemp.y)
             {
-                foodPos.x = xVal;
-                foodPos.y = yVal;
                 drawn = true;
                 break;
             }
         }
-
-        if(drawn)
-        {
-            break; //break out of while loop when valid food pos is found
-        }
-
-
     }
-
+    foodPos.x = xVal;
+    foodPos.y = yVal;
 }
-
-// void Food::regenerateFood()
-// {
-//     char input = mainGameMechsRef->getInput();
-
-//     switch(input)
-//     {
-//         case 'h':
-//             generateFood(foodPos);
-//             break;
-//     }
-//     mainGameMechsRef->clearInput();
-// }
 
 void Food::getFoodPos(objPos &returnPos)
 {
