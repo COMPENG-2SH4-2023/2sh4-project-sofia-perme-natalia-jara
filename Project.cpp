@@ -8,7 +8,9 @@
 
 using namespace std;
 
-#define DELAY_CONST 100000
+// #define DELAY_CONST 100000 
+#define DELAY_CONST 200000
+
 
 GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
 Player* myPlayer;//should i move these heap variables into their respective classes?
@@ -132,7 +134,7 @@ void DrawScreen()
                 MacUILib_printf("%s","#");
             }
 
-            else if (i == foodPos.y && j == foodPos.x)
+            else if (i==foodPos.y && j==foodPos.x  )
             {
                 MacUILib_printf("%c", foodPos.symbol);
             }
@@ -154,6 +156,7 @@ void DrawScreen()
     MacUILib_printf("Score: %d", myGM->getScore());
     MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());
     MacUILib_printf("\nFood Pos: <%d, %d>, + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
+
 }
 
 void LoopDelay(void)
@@ -164,8 +167,17 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     // MacUILib_clearScreen();
-
-    MacUILib_uninit();
+    if (myGM->getLoseFlagStatus()==false)
+    {
+        MacUILib_printf("\nEXIT GAME");
+        MacUILib_uninit();
+    }
+     if (myGM->getLoseFlagStatus()==true)
+     {
+        MacUILib_printf("\nEXIT GAME");
+        MacUILib_printf("\nYOU LOST");
+        MacUILib_uninit();
+     }
 
     delete myGM;
     delete myPlayer;

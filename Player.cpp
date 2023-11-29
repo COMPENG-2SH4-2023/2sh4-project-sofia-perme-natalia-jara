@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "Food.h"
+#include "MacUILib.h"
+#include <iostream>
 
 
 Player::Player(GameMechs* thisGMRef)
@@ -15,8 +17,8 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList=new objPosArrayList();
 
     playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
+    // playerPosList->insertHead(tempPos);
     //no heap player yet; no new yet
 }
 
@@ -100,10 +102,11 @@ void Player::movePlayer(Food* myFood)
 {
     // PPA3 Finite State Machine logic
 
-    objPos newHead;
+    objPos tempPos;
 
     objPos currHead;   //holdingh pos info of current head
     playerPosList->getHeadElement(currHead);
+    
 
     objPos tempFood;
     myFood->getFoodPos(tempFood);
@@ -142,7 +145,7 @@ void Player::movePlayer(Food* myFood)
     {
         currHead.y=1;
     }
-    else if(tempFood.x == currHead.x && tempFood.y == currHead.y)
+    if(tempFood.x == currHead.x && tempFood.y == currHead.y)
     {
         playerPosList->insertHead(currHead);
         mainGameMechsRef->incrementScore();
@@ -153,11 +156,25 @@ void Player::movePlayer(Food* myFood)
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
     }
+
+    int size=playerPosList->getSize();
+    for (int i=1;i<size;i++)
+    {
+        playerPosList->getElement(tempPos,i);
+        if(currHead.x==tempPos.x && currHead.y==tempPos.y)
+        {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+        }
+
+    }
+
+
+
     
 
     //new current head should be insertedto the head of the list
-    playerPosList->insertHead(currHead);
+    // playerPosList->insertHead(currHead);
     // then remove tail
-    playerPosList->removeTail();
+    // playerPosList->removeTail();
 }
-
