@@ -9,9 +9,13 @@ GameMechs::GameMechs()
     exitFlag = false;
     boardSizeX = 30; //default board size as recommended in manual
     boardSizeY = 15;
+    foodNum=5;   //number of food items to be generated
+    featuresNum=2; //num of special features
+
+
 }
 
-GameMechs::GameMechs(int boardX, int boardY)
+GameMechs::GameMechs(int boardX, int boardY,int numFood,int numFeatures)
 {
     input = 0;
     score = 0;
@@ -19,6 +23,8 @@ GameMechs::GameMechs(int boardX, int boardY)
     exitFlag = false;
     boardSizeX = boardX;
     boardSizeY = boardY;
+    foodNum=numFood;   
+    featuresNum=numFeatures; 
 }
 
 // do you need a destructor?
@@ -50,6 +56,14 @@ int GameMechs::getBoardSizeY()
     return boardSizeY;
 }
 
+int GameMechs::getFeaturesNum()
+{
+    return featuresNum;
+}
+int GameMechs::getFoodNum()
+{
+    return foodNum;
+}
 
 void GameMechs::setExitTrue()
 {

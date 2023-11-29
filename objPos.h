@@ -20,6 +20,8 @@ class objPos
         bool isPosEqual(const objPos* refPos);
         
         char getSymbolIfPosEqual(const objPos* refPos);
+
+        enum Feature {normal,poison,addPoints,addPointsLen};
 };
 
 #endif

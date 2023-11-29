@@ -12,7 +12,8 @@ Player::Player(GameMechs* thisGMRef)
 
     // more actions to be included
     objPos tempPos;
-    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '@');     //possible to write in simpler way--research way
+    // tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '@');     //possible to write in simpler way--research way
+    tempPos.setObjPos(4,4, '@');
 
     playerPosList=new objPosArrayList();
 
@@ -149,7 +150,7 @@ void Player::movePlayer(Food* myFood)
     {
         playerPosList->insertHead(currHead);
         mainGameMechsRef->incrementScore();
-        myFood->generateFood(playerPosList);
+        myFood->generateFood(playerPosList,true);
     }
     else //if no collision detected
     {

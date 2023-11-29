@@ -6,20 +6,12 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
-Food::Food(GameMechs* thisGMRef,objPosArrayList* foodBucket)
+
+Food::Food(GameMechs* thisGMRef,objPosArrayList* aFoodBucket)
 {
     mainGameMechsRef = thisGMRef;
     foodPos.setObjPos(-1, -1, 'o');
-    foodBucket=new objPosArrayList();
-    // foodBucket->insertHead(foodPos);
-    // foodBucket->insertHead(foodPos);
-    // foodBucket->insertHead(foodPos);
-    // for (int i=0;i<foodBucket->getSize();i++)
-    // {
-    //     foodPos.setObjPos(-1,-1,'o');
-    // }
-
-
+    foodBucket=aFoodBucket;
 }
 
 Food::~Food()
@@ -27,78 +19,51 @@ Food::~Food()
 
 }
 
-void Food::generateFood(objPosArrayList* blockOffList)
+void Food::generateFood(objPosArrayList* blockOffList, bool special)
 {
-
     srand(time(NULL));
 
-    bool drawn;
     int xVal;
     int yVal;
     int counter;
     objPos playerTemp;
-    // objPos foodPos;
-
 
     while(true)
     {
-        drawn = false;
-
         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
-
-        // MacUILib_printf("x val is %d, ", xVal);
-        // MacUILib_printf("y val is %d\n", yVal);
-
-        // for (int i=0;i< foodBucket->getSize();i++)
-        // {
-        //     foodBucket->getElement(foodPos,i)
-        // }
-
-        for(int i = 0; i < blockOffList->getSize(); i++)
+        
+        if(!contains(blockOffList,xVal,yVal)&&!contains(foodBucket,xVal,yVal))
         {
-            blockOffList->getElement(playerTemp, i);
-
-                if (xVal != playerTemp.x && yVal != playerTemp.y)
-                {
-                    foodPos.x = xVal;
-                    foodPos.y = yVal;
-                    drawn = true;
-                    break;
-                }
-            
-
-            // if(xVal != playerTemp.x && yVal != playerTemp.y)
-            // {
-            //     foodPos.x = xVal;
-            //     foodPos.y = yVal;
-            //     drawn = true;
-            //     break;
-            // }
+            foodPos.x = xVal;
+            foodPos.y = yVal;
+            foodBucket->insertTail(foodPos);
+            break;
         }
-
-        if(drawn)
-        {
-            break; //break out of while loop when valid food pos is found
-        }
-
-
     }
+}
+
+bool Food::contains(objPosArrayList* blockOffList,int x,int y)
+{
+    objPos listElement;
+    if (blockOffList->getSize()==0)
+    {
+        return false;
+    }
+    for(int i = 0; i < blockOffList->getSize(); i++)
+        {
+            blockOffList->getElement(listElement, i);
+
+                if (x == listElement.x && y == listElement.y)
+                {
+                    return true;
+                    
+                }
+        }
+      return false;  
 
 }
 
-// void Food::regenerateFood()
-// {
-//     char input = mainGameMechsRef->getInput();
-
-//     switch(input)
-//     {
-//         case 'h':
-//             generateFood(foodPos);
-//             break;
-//     }
-//     mainGameMechsRef->clearInput();
-// }
 
 void Food::getFoodPos(objPos &returnPos)
 {

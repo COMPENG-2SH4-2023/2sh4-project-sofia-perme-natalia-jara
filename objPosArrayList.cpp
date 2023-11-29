@@ -1,4 +1,7 @@
 #include "objPosArrayList.h"
+#include <stdlib.h>
+using namespace std;
+
 
 // Paste your CUTE Tested implementation here.
 // Paste your CUTE Tested implementation here.
@@ -76,3 +79,21 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
     }
     return returnPos.setObjPos(aList[index]);
 }
+
+
+    void objPosArrayList:: getByPos(objPos &returnPos,int x,int y)
+    {
+        if(listSize==0)
+        {
+            return;
+        }
+        for(int i=0;i<listSize;i++)
+        {
+            objPos currentElement=aList[i];
+            // getElement(currentElement,i);
+            if(currentElement.x==x && currentElement.y==y )
+            {
+                 returnPos.setObjPos(currentElement);
+            }
+        }
+    }

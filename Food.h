@@ -18,11 +18,16 @@ class Food
         GameMechs* mainGameMechsRef;
         objPosArrayList* foodBucket;
 
+        bool contains(objPosArrayList* blockOffList,int x,int y);
+        
+        // int numFood;   //number of food items to be generated
+        // int numFeatures; //num of special features
+
     public:
         Food(GameMechs* thisGMRef,objPosArrayList* foodBucket);
         ~Food();
 
-        void generateFood(objPosArrayList* blockOffList);// need to upgrade this
+        void generateFood(objPosArrayList* blockOffList, bool special);// need to upgrade this
         void getFoodPos(objPos &returnPos);
         //void regenerateFood(); //new food location is generated when debug key is pressed (iteration 2B)
       

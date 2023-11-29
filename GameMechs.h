@@ -27,9 +27,13 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
+        int foodNum;   //number of food items to be generated
+        int featuresNum; //num of special features
+
+
     public:
         GameMechs();
-        GameMechs(int boardX, int boardY);
+        GameMechs(int boardX, int boardY,int numFood,int numFeatures);
         ~GameMechs();
         
         bool getExitFlagStatus();
@@ -41,6 +45,9 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
+
+        int getFeaturesNum();
+        int getFoodNum();
 
         int getScore();
         void incrementScore();
