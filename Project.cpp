@@ -15,6 +15,7 @@ using namespace std;
 GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
 Player* myPlayer;//should i move these heap variables into their respective classes?
 Food* myFood;
+objPosArrayList* foodBucket;
 
 
 void Initialize(void);
@@ -50,7 +51,7 @@ void Initialize(void)
 
     myGM = new GameMechs(20,10); // need to delete from heap?
     myPlayer = new Player(myGM);
-    myFood = new Food(myGM);
+    myFood = new Food(myGM,foodBucket);
     // exit flag removed because object myGM already has flag = false
 
     objPos playerPos;
@@ -135,8 +136,12 @@ void DrawScreen()
             }
 
             else if (i==foodPos.y && j==foodPos.x  )
-            {
+            { 
+                // for(int i=0;i<foodBucket->getSize();i++)
+                // {
                 MacUILib_printf("%c", foodPos.symbol);
+                // }
+                // MacUILib_printf("%c", foodPos.symbol);
             }
 
 

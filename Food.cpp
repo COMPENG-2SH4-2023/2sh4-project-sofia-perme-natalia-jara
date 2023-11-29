@@ -4,11 +4,22 @@
 #include "GameMechs.h"
 #include "Player.h"
 #include "objPos.h"
+#include "objPosArrayList.h"
 
-Food::Food(GameMechs* thisGMRef)
+Food::Food(GameMechs* thisGMRef,objPosArrayList* foodBucket)
 {
     mainGameMechsRef = thisGMRef;
     foodPos.setObjPos(-1, -1, 'o');
+    foodBucket=new objPosArrayList();
+    // foodBucket->insertHead(foodPos);
+    // foodBucket->insertHead(foodPos);
+    // foodBucket->insertHead(foodPos);
+    // for (int i=0;i<foodBucket->getSize();i++)
+    // {
+    //     foodPos.setObjPos(-1,-1,'o');
+    // }
+
+
 }
 
 Food::~Food()
@@ -24,7 +35,10 @@ void Food::generateFood(objPosArrayList* blockOffList)
     bool drawn;
     int xVal;
     int yVal;
+    int counter;
     objPos playerTemp;
+    // objPos foodPos;
+
 
     while(true)
     {
@@ -36,17 +50,31 @@ void Food::generateFood(objPosArrayList* blockOffList)
         // MacUILib_printf("x val is %d, ", xVal);
         // MacUILib_printf("y val is %d\n", yVal);
 
+        // for (int i=0;i< foodBucket->getSize();i++)
+        // {
+        //     foodBucket->getElement(foodPos,i)
+        // }
+
         for(int i = 0; i < blockOffList->getSize(); i++)
         {
             blockOffList->getElement(playerTemp, i);
 
-            if(xVal != playerTemp.x && yVal != playerTemp.y)
-            {
-                foodPos.x = xVal;
-                foodPos.y = yVal;
-                drawn = true;
-                break;
-            }
+                if (xVal != playerTemp.x && yVal != playerTemp.y)
+                {
+                    foodPos.x = xVal;
+                    foodPos.y = yVal;
+                    drawn = true;
+                    break;
+                }
+            
+
+            // if(xVal != playerTemp.x && yVal != playerTemp.y)
+            // {
+            //     foodPos.x = xVal;
+            //     foodPos.y = yVal;
+            //     drawn = true;
+            //     break;
+            // }
         }
 
         if(drawn)

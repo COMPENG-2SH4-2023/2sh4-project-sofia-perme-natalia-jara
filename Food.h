@@ -16,9 +16,10 @@ class Food
     private:
         objPos foodPos;
         GameMechs* mainGameMechsRef;
+        objPosArrayList* foodBucket;
 
     public:
-        Food(GameMechs* thisGMRef);
+        Food(GameMechs* thisGMRef,objPosArrayList* foodBucket);
         ~Food();
 
         void generateFood(objPosArrayList* blockOffList);// need to upgrade this
