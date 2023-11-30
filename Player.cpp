@@ -35,12 +35,9 @@ bool Player::checkFoodCollision(objPos tempPos)
     objPos foodPos;
     bool special;
 
-    objPosArrayList * foodBucket = foodRef->getFoodBucket(); //giving seg fault
-    MacUILib_printf("assigning foodBucket works in checkFoodCollision\n");
+    objPosArrayList * foodBucket = foodRef->getFoodBucket(); //getting abd filling empty objArrayList with foodBucket list
 
-   
-
-    for(int i = 0; i < foodBucket->getSize(); i++)   //problem with foodBucket and listSize -> returns segFault
+    for(int i = 0; i < foodBucket->getSize(); i++)   
     {
 
         if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == 'o')
@@ -58,7 +55,7 @@ bool Player::checkFoodCollision(objPos tempPos)
         }
     }
     return special;
-    MacUILib_printf("for loop works in checkFoodCollision\n");
+
 }
 
 
@@ -189,16 +186,16 @@ void Player::movePlayer(Food *myFood)
 }
 void Player::checkSnakeSuicide()
 {   
-    objPos tempVar;
+    objPos snakeBody;
     objPos currentHead;   //holding pos info of current head
     playerPosList->getHeadElement(currentHead);
     int size = playerPosList->getSize();
 
     for (int i = 1; i < size; i++)
     {
-        playerPosList->getElement(tempVar, i); // turn self collison into member function
+        playerPosList->getElement(snakeBody, i); // turn self collison into member function
 
-        if (currentHead.x == tempVar.x && currentHead.y == tempVar.y) // if self collision detected
+        if (currentHead.x == snakeBody.x && currentHead.y == snakeBody.y) // if self collision detected
         {
             mainGameMechsRef->setLoseFlag();
             mainGameMechsRef->setExitTrue();
