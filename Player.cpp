@@ -147,9 +147,10 @@ void Player::movePlayer(Food* myFood)
     }
     if(tempFood.x == currHead.x && tempFood.y == currHead.y)
     {
+        myFood->generateFood(playerPosList);
         playerPosList->insertHead(currHead);
         mainGameMechsRef->incrementScore();
-        myFood->generateFood(playerPosList);
+        // myFood->generateFood(playerPosList);
     }
     else //if no collision detected
     {

@@ -21,12 +21,34 @@ void Food::generateFood(objPosArrayList* blockOffList)
 
     srand(time(NULL));
 
-    bool drawn=true;
+    bool drawn;
     int xVal;
     int yVal;
     objPos playerTemp;
 
-    while(drawn)
+//     while(drawn)
+//     {
+//         drawn = false;
+
+//         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
+//         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
+
+//         for(int i = 0; i < blockOffList->getSize(); i++)
+//         {
+//             blockOffList->getElement(playerTemp, i);
+
+//             if(xVal == playerTemp.x && yVal == playerTemp.y)
+//             {
+//                 drawn = true;
+//                 break;
+//             }
+//         }
+//     }
+//     foodPos.x = xVal;
+//     foodPos.y = yVal;
+// }
+
+    do 
     {
         drawn = false;
 
@@ -46,7 +68,8 @@ void Food::generateFood(objPosArrayList* blockOffList)
     }
     foodPos.x = xVal;
     foodPos.y = yVal;
-}
+}while (drawn);
+
 
 void Food::getFoodPos(objPos &returnPos)
 {
