@@ -7,26 +7,18 @@
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
-
     myDir = STOP;
 
-    // more actions to be included
     objPos tempPos;
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '@');     //possible to write in simpler way--research way
 
-    playerPosList=new objPosArrayList();
-
+    playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-    // playerPosList->insertHead(tempPos);
-    //no heap player yet; no new yet
-}
 
+}
 
 Player::~Player()
 {
-    // delete any heap members here
-    //can leave empty for now
     delete playerPosList; //do not need a square breacket since we only have one
 }
 
@@ -36,17 +28,37 @@ objPosArrayList* Player::getPlayerPos()
     return playerPosList;
 }
 
+int Player::checkFoodCollision(objPos tempPos, objPosArrayList* foodBucket)
+{
+    objPos foodPos;
+    bool special;
+
+    for(int i = 0; i < foodBucket->getSize(); i++)
+    {
+        foodBucket->getElement(foodPos,i);
+
+        if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == 'o')
+        {
+            special = false;
+            break;
+        }
+
+        if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == '+')
+        {
+            special = true;
+            break;
+        }
+    }
+    return special;
+}
+
+
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic 
 
-    //Where do I get the input where do I check for input
-    //input-not by calling get char 
-    // coordinate with teammemeber whos desining game mechanism
-    // objPos myPos;
-    //GameMechs* myGM;
     char input = mainGameMechsRef->getInput();
-    // bool setExitTrue=mainGameMechsRef->setExitTrue();
+
     switch(input)
     {
         case ' ':
@@ -83,15 +95,6 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
-        // case 'p':
-        // case 'P':
-        //     mainGameMechsRef->incrementScore();
-        //     break;
-
-        case 'k':
-        case 'K':
-            mainGameMechsRef->setLoseFlag();
-            break;
 
     }  
 
@@ -104,7 +107,7 @@ void Player::movePlayer(Food* myFood)
 
     objPos tempPos;
 
-    objPos currHead;   //holdingh pos info of current head
+    objPos currHead;   //holding pos info of current head
     playerPosList->getHeadElement(currHead);
     
 
@@ -113,45 +116,81 @@ void Player::movePlayer(Food* myFood)
 
      switch (myDir)
     {
-    case UP:
-        currHead.y--;
-        break;
-    case DOWN:
-        currHead.y++;
-        break;
-    case LEFT:
-        currHead.x--;
-        break;
-    case RIGHT:
-        currHead.x++;
-        break;
-    case STOP:
-        break;
+        case UP:
+            currHead.y--;
+            if (currHead.y==0)
+            {
+                currHead.y=mainGameMechsRef->getBoardSizeY()-2;
+            }
+            break;
+
+        case DOWN:
+            currHead.y++;
+            if (currHead.y==mainGameMechsRef->getBoardSizeY()-1)
+            {
+                currHead.y=1;
+            }
+            break;
+
+        case LEFT:
+            currHead.x--;
+            if (currHead.x==0)
+            {
+                currHead.x=mainGameMechsRef->getBoardSizeX()-2;
+            }
+            break;
+
+        case RIGHT:
+            currHead.x++;
+            if (currHead.x==mainGameMechsRef->getBoardSizeX()-1)
+            {
+                currHead.x=1;
+            }
+            break;
+
+        case STOP:
+            break;
     }
 
-    if (currHead.x==mainGameMechsRef->getBoardSizeX()-1)
+    // if (currHead.x==mainGameMechsRef->getBoardSizeX()-1)
+    // {
+    //     currHead.x=1;
+    // }
+    // else if (currHead.x==0)
+    // {
+    //     currHead.x=mainGameMechsRef->getBoardSizeX()-2;
+    // }
+    // else if (currHead.y==0)
+    // {
+    //     currHead.y=mainGameMechsRef->getBoardSizeY()-2;
+    // }
+    // else if (currHead.y==mainGameMechsRef->getBoardSizeY()-1)
+    // {
+    //     currHead.y=1;
+    // }
+
+    // if(tempFood.x == currHead.x && tempFood.y == currHead.y) //if food and player collision detected
+    // {
+    //     playerPosList->insertHead(currHead);
+    //     mainGameMechsRef->incrementScore();
+    //     myFood->generateFood(playerPosList);
+    // }
+
+    if(checkFoodCollision(tempPos, foodBucket) == false)
     {
-        currHead.x=1;
-    }
-    else if (currHead.x==0)
-    {
-        currHead.x=mainGameMechsRef->getBoardSizeX()-2;
-    }
-    else if (currHead.y==0)
-    {
-        currHead.y=mainGameMechsRef->getBoardSizeY()-2;
-    }
-    else if (currHead.y==mainGameMechsRef->getBoardSizeY()-1)
-    {
-        currHead.y=1;
-    }
-    if(tempFood.x == currHead.x && tempFood.y == currHead.y)
-    {
+        playerPosList->insertHead(tempPos);
+        mainGameMechsRef->incrementScore();
         myFood->generateFood(playerPosList);
-        playerPosList->insertHead(currHead);
+    }
+
+    else if(checkFoodCollision(tempPos, foodBucket) == true)
+    {
+        playerPosList->insertHead(tempPos);
+        playerPosList->removeTail();
         mainGameMechsRef->incrementScore();
         // myFood->generateFood(playerPosList);
     }
+
     else //if no collision detected
     {
         playerPosList->insertHead(currHead);
@@ -159,23 +198,17 @@ void Player::movePlayer(Food* myFood)
     }
 
     int size=playerPosList->getSize();
+    
     for (int i=1;i<size;i++)
     {
-        playerPosList->getElement(tempPos,i);
-        if(currHead.x==tempPos.x && currHead.y==tempPos.y)
+        playerPosList->getElement(tempPos,i); //turn self collison into member function
+
+        if(currHead.x==tempPos.x && currHead.y==tempPos.y) //if self collision detected
         {
             mainGameMechsRef->setLoseFlag();
             mainGameMechsRef->setExitTrue();
         }
 
     }
-
-
-
-    
-
-    //new current head should be insertedto the head of the list
-    // playerPosList->insertHead(currHead);
-    // then remove tail
-    // playerPosList->removeTail();
+ 
 }
