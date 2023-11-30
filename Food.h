@@ -18,13 +18,12 @@ class Food
         GameMechs* mainGameMechsRef;
 
     public:
-        Food(GameMechs* thisGMRef);
+        Food(GameMechs* thisGMRef); 
         ~Food();
 
-        void generateFood(objPosArrayList* blockOffList);// need to upgrade this
+        void generateFood(objPosArrayList* blockOffList); //blockoff is now entire snake body
         void getFoodPos(objPos &returnPos);
-        //void regenerateFood(); //new food location is generated when debug key is pressed (iteration 2B)
-      
+        
 };
 
 #endif
