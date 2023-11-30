@@ -26,7 +26,7 @@ void Food::generateFood(objPosArrayList* blockOffList)
     int xVal;
     int yVal;
     objPos playerTemp;
-    int conflict=true;
+    bool conflict=true;
     
 
     for(int i = 0; i < 2; i++) //checking each element of snake body
