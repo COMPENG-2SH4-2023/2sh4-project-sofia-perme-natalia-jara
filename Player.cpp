@@ -176,14 +176,14 @@ void Player::movePlayer(Food* myFood)
     //     myFood->generateFood(playerPosList);
     // }
 
-    if(checkFoodConsumption(tempPos, foodBucket) == false)
+    if(checkFoodCollision(tempPos, foodBucket) == false)
     {
         playerPosList->insertHead(tempPos);
         mainGameMechsRef->incrementScore();
         myFood->generateFood(playerPosList);
     }
 
-    else if(checkFoodConsumption(tempPos, foodBucket) == true)
+    else if(checkFoodCollision(tempPos, foodBucket) == true)
     {
         playerPosList->insertHead(tempPos);
         playerPosList->removeTail();
