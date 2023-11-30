@@ -17,13 +17,17 @@ class Food
         objPos foodPos;
         GameMechs* mainGameMechsRef;
 
+        objPosArrayList* foodBucket;
+
     public:
         Food(GameMechs* thisGMRef); 
         ~Food();
 
         void generateFood(objPosArrayList* blockOffList); //blockoff is now entire snake body
         void getFoodPos(objPos &returnPos);
-        
+
+        objPosArrayList* getFoodBucket();
+  
 };
 
 #endif

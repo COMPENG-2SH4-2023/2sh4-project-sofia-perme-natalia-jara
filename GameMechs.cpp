@@ -1,5 +1,6 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
+//#include "Food.h"
 
 GameMechs::GameMechs()
 {
@@ -73,9 +74,17 @@ int GameMechs::getScore()
     return score;
 }
 
-void GameMechs::incrementScore()
+void GameMechs::incrementScore(bool special)
 {
-    score++;
+    if(special == false)
+    {
+        score += 1;
+    }
+
+    else
+    {
+        score += 5;
+    }
 }
 
 bool GameMechs::getLoseFlagStatus()

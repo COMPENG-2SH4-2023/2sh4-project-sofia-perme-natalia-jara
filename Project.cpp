@@ -81,13 +81,12 @@ void DrawScreen()
     MacUILib_clearScreen();
 
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    objPosArrayList* foodBucket = myFood->getFoodBucket();
 
     objPos tempBody;
 
     objPos foodPos;
     myFood->getFoodPos(foodPos);
-
-    bool printSnake;
 
     int height = myGM->getBoardSizeY();
     int width = myGM->getBoardSizeX();
@@ -97,7 +96,7 @@ void DrawScreen()
     {
         for (int j = 0; j < width; j++)
         {
-            printSnake = false;
+            bool printSnake = false;
 
             for (int k = 0; k < snakeSize; k++)
             {
@@ -112,18 +111,40 @@ void DrawScreen()
             
             }
 
-            if(printSnake)  
+            if(printSnake)
+            {
                 continue;
+            }  
+
+            bool printFood = false;
+
+            for(int k = 0; k < foodBucket->getSize(); k++)
+            {
+                foodBucket->getElement(foodPos, k);
+
+                if(i == foodPos.y && j == foodPos.x)
+                {
+                    MacUILib_printf("%c", foodPos.symbol);
+                    printFood = true;
+                    break;
+                }
+
+            }
+
+            if(printFood)
+            {
+                continue;
+            }
             
             if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
             { // Use to check when reaching end/beginning of board in order to draw sides
                 MacUILib_printf("%s","#");
             }
 
-            else if (i==foodPos.y && j==foodPos.x)
-            {
-                MacUILib_printf("%c", foodPos.symbol);
-            }
+            // else if (i==foodPos.y && j==foodPos.x)
+            // {
+            //     MacUILib_printf("%c", foodPos.symbol);
+            // }
 
 
             else
@@ -131,7 +152,7 @@ void DrawScreen()
                 MacUILib_printf("%s"," ");
             }
         }
-        MacUILib_printf("%s", "\n");
+        MacUILib_printf("\n");
     }
     MacUILib_printf("Score: %d", myGM->getScore());
     MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());

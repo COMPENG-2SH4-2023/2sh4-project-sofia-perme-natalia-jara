@@ -6,6 +6,7 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -36,7 +37,7 @@ class GameMechs
         int getBoardSizeY();
 
         int getScore();
-        void incrementScore();
+        void incrementScore(bool special);
 
         bool getLoseFlagStatus();
         bool setLoseFlag();

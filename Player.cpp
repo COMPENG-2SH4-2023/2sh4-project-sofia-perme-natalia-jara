@@ -28,6 +28,31 @@ objPosArrayList* Player::getPlayerPos()
     return playerPosList;
 }
 
+int Player::checkFoodCollision(objPos tempPos, objPosArrayList* foodBucket)
+{
+    objPos foodPos;
+    bool special;
+
+    for(int i = 0; i < foodBucket->getSize(); i++)
+    {
+        foodBucket->getElement(foodPos,i);
+
+        if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == 'o')
+        {
+            special = false;
+            break;
+        }
+
+        if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == '+')
+        {
+            special = true;
+            break;
+        }
+    }
+    return special;
+}
+
+
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic 
@@ -82,7 +107,7 @@ void Player::movePlayer(Food* myFood)
 
     objPos tempPos;
 
-    objPos currHead;   //holdingh pos info of current head
+    objPos currHead;   //holding pos info of current head
     playerPosList->getHeadElement(currHead);
     
 
@@ -97,7 +122,6 @@ void Player::movePlayer(Food* myFood)
             {
                 currHead.y=mainGameMechsRef->getBoardSizeY()-2;
             }
-            //currHead.y--;
             break;
 
         case DOWN:
@@ -106,7 +130,6 @@ void Player::movePlayer(Food* myFood)
             {
                 currHead.y=1;
             }
-            //currHead.y++;
             break;
 
         case LEFT:
@@ -115,7 +138,6 @@ void Player::movePlayer(Food* myFood)
             {
                 currHead.x=mainGameMechsRef->getBoardSizeX()-2;
             }
-            //currHead.x--;
             break;
 
         case RIGHT:
@@ -124,7 +146,6 @@ void Player::movePlayer(Food* myFood)
             {
                 currHead.x=1;
             }
-            //currHead.x++;
             break;
 
         case STOP:
@@ -148,9 +169,24 @@ void Player::movePlayer(Food* myFood)
     //     currHead.y=1;
     // }
 
-    if(tempFood.x == currHead.x && tempFood.y == currHead.y) //if food and player collision detected
+    // if(tempFood.x == currHead.x && tempFood.y == currHead.y) //if food and player collision detected
+    // {
+    //     playerPosList->insertHead(currHead);
+    //     mainGameMechsRef->incrementScore();
+    //     myFood->generateFood(playerPosList);
+    // }
+
+    if(checkFoodConsumption(tempPos, foodBucket) == false)
     {
-        playerPosList->insertHead(currHead);
+        playerPosList->insertHead(tempPos);
+        mainGameMechsRef->incrementScore();
+        myFood->generateFood(playerPosList);
+    }
+
+    else if(checkFoodConsumption(tempPos, foodBucket) == true)
+    {
+        playerPosList->insertHead(tempPos);
+        playerPosList->removeTail();
         mainGameMechsRef->incrementScore();
         myFood->generateFood(playerPosList);
     }
@@ -165,7 +201,7 @@ void Player::movePlayer(Food* myFood)
     
     for (int i=1;i<size;i++)
     {
-        playerPosList->getElement(tempPos,i);
+        playerPosList->getElement(tempPos,i); //turn self collison into member function
 
         if(currHead.x==tempPos.x && currHead.y==tempPos.y) //if self collision detected
         {

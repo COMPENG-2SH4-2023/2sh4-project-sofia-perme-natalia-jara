@@ -18,6 +18,10 @@ class Player
         void updatePlayerDir();
         void movePlayer(Food* myFood);
 
+        //bool checkSelfCollision(); //feature 3, iteration 3
+        int checkFoodCollision(objPos tempPos, objPosArrayList* foodBucket);
+
+
     private:
         objPosArrayList *playerPosList;      
         enum Dir myDir;
