@@ -11,7 +11,8 @@ class Player
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // direction states
 
-        Player(GameMechs* thisGMRef);
+        // Player(GameMechs* thisGMRef);
+        Player(GameMechs* thisGMRef,Food * thisFoodRef);
         ~Player();
 
         objPosArrayList* getPlayerPos(); // considers array list - now snake body
@@ -19,13 +20,20 @@ class Player
         void movePlayer(Food* myFood);
 
         //bool checkSelfCollision(); //feature 3, iteration 3
-        int checkFoodCollision(objPos tempPos, objPosArrayList* foodBucket);
+        bool checkFoodCollision(objPos tempPos); //problem is we are creating new foodBucket from objPos not calling already filled one from food class
+        void checkSnakeSuicide();
+
+        // objPosArrayList*setFoodBucket(Food * myFood,objPosArrayList* foodBucket);
+
 
 
     private:
-        objPosArrayList *playerPosList;      
+        objPosArrayList *playerPosList;
+        // objPosArrayList * foodBucket;      
         enum Dir myDir;
         GameMechs* mainGameMechsRef; // reference to Main Game Mechanics class
+        Food* foodRef;  //refrence to food class
+
 };
 
 #endif

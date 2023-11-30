@@ -2,9 +2,7 @@
 #include "MacUILib.h"
 #include <stdlib.h>
 #include <time.h>
-#include "GameMechs.h"
-#include "Player.h"
-#include "objPos.h"
+
 
 Food::Food(GameMechs* thisGMRef)
 {
@@ -28,6 +26,8 @@ void Food::generateFood(objPosArrayList* blockOffList)
     int xVal;
     int yVal;
     objPos playerTemp;
+    int conflict=true;
+    
 
     for(int i = 0; i < 2; i++) //checking each element of snake body
     {
@@ -44,7 +44,8 @@ void Food::generateFood(objPosArrayList* blockOffList)
         foodPos.x = xVal; //food position can be set once no conflict is detected
         foodPos.y = yVal;
         foodPos.symbol = '+';
-        foodBucket->insertHead(foodPos);
+        foodBucket->insertTail(foodPos);
+        MacUILib_printf("FoodBucket[%d]:%d,%d,%c\n",i,foodPos.x,foodPos.y,foodPos.symbol);
     }
 
     for(int i = 2; i < 5; i++) //checking each element of snake body
@@ -62,55 +63,58 @@ void Food::generateFood(objPosArrayList* blockOffList)
         foodPos.x = xVal; //food position can be set once no conflict is detected
         foodPos.y = yVal;
         foodPos.symbol = 'o';
-        foodBucket->insertHead(foodPos);
+        foodBucket->insertTail(foodPos);
+        MacUILib_printf("FoodBucket[%d]:%d,%d,%c\n",i,foodPos.x,foodPos.y,foodPos.symbol);
     }
     
 
-    // while(conflict)
-    // {
-    //     conflict = false; //initially no conflict in positions
+//     while(conflict)
+//     {
+//         conflict = false; //initially no conflict in positions
 
-    //     xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
-    //     yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
+//         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
+//         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
 
-    //     for(int i = 0; i < 2; i++) //checking each element of snake body
-    //     {
-    //         blockOffList->getElement(playerTemp, i); //get snake body element at for loop index
+//         for(int i = 0; i < 2; i++) //checking each element of snake body
+//         {
+//             blockOffList->getElement(playerTemp, i); //get snake body element at for loop index
 
-    //         if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
-    //         {
-    //             conflict = true; 
-    //             break;  
-    //         }
-    //     }
-    // }
-    // foodPos.x = xVal; //food position can be set once no conflict is detected
-    // foodPos.y = yVal;
-    // foodPos.symbol = '+';
-    // foodBucket->insertHead(foodPos);
+//             if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
+//             {
+//                 conflict = true; 
+//                 break;  
+//             }
+//         }
+//     }
+//     foodPos.x = xVal; //food position can be set once no conflict is detected
+//     foodPos.y = yVal;
+//     foodPos.symbol = '+';
+//     foodBucket->insertHead(foodPos);
+//     conflict=true;
+//     MacUILib_printf("FoodBucket:%d,%d,%c\n",foodPos.x,foodPos.y,foodPos.symbol);
 
-    // while(conflict)
-    // {
-    //     conflict = false; //initially no conflict in positions
+//     while(conflict)
+//     {
+//         conflict = false; //initially no conflict in positions
 
-    //     xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
-    //     yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
+//         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
+//         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
 
-    //     for(int i = 2; i < 5; i++) //checking each element of snake body
-    //     {
-    //         blockOffList->getElement(playerTemp, i); //get snake body element at for loop index
+//         for(int i = 2; i < 5; i++) //checking each element of snake body
+//         {
+//             blockOffList->getElement(playerTemp, i); //get snake body element at for loop index
 
-    //         if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
-    //         {
-    //             conflict = true; 
-    //             break;  
-    //         }
-    //     }
-    // }
-    // foodPos.x = xVal; //food position can be set once no conflict is detected
-    // foodPos.y = yVal;
-    // foodPos.symbol = 'o';
-    // foodBucket->insertHead(foodPos);
+//             if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
+//             {
+//                 conflict = true; 
+//                 break;  
+//             }
+//         }
+//     }
+//     foodPos.x = xVal; //food position can be set once no conflict is detected
+//     foodPos.y = yVal;
+//     foodPos.symbol = 'o';
+//     foodBucket->insertHead(foodPos);
 
 }
 

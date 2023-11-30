@@ -6,7 +6,9 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
-#include "Player.h"
+// #include "Food.h"
+// #include "Player.h"
+#include "MacUILib.h"
 
 using namespace std;
 
@@ -20,6 +22,8 @@ class GameMechs
         
         int boardSizeX;
         int boardSizeY;
+
+        // objPosArrayList* foodBucket;
 
     public:
         GameMechs();
@@ -41,6 +45,8 @@ class GameMechs
 
         bool getLoseFlagStatus();
         bool setLoseFlag();
+
+        // objPosArrayList* getFoodBin(Food * myFood);
       
 };
 

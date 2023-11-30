@@ -1,12 +1,13 @@
 #include "Player.h"
-#include "Food.h"
-#include "MacUILib.h"
+// #include "Food.h"
+// #include "MacUILib.h"
 #include <iostream>
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef,Food * thisFoodRef )
 {
     mainGameMechsRef = thisGMRef;
+    foodRef=thisFoodRef;
     myDir = STOP;
 
     objPos tempPos;
@@ -14,7 +15,7 @@ Player::Player(GameMechs* thisGMRef)
 
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
-
+    
 }
 
 Player::~Player()
@@ -28,29 +29,39 @@ objPosArrayList* Player::getPlayerPos()
     return playerPosList;
 }
 
-int Player::checkFoodCollision(objPos tempPos, objPosArrayList* foodBucket)
+
+bool Player::checkFoodCollision(objPos tempPos)
 {
     objPos foodPos;
     bool special;
 
-    for(int i = 0; i < foodBucket->getSize(); i++)
+    objPosArrayList * foodBucket = foodRef->getFoodBucket(); //giving seg fault
+    MacUILib_printf("assigning foodBucket works in checkFoodCollision\n");
+
+   
+
+    for(int i = 0; i < foodBucket->getSize(); i++)   //problem with foodBucket and listSize -> returns segFault
     {
-        foodBucket->getElement(foodPos,i);
 
         if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == 'o')
         {
             special = false;
             break;
+
         }
 
         if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == '+')
         {
             special = true;
             break;
+            // return true;
         }
     }
     return special;
+    MacUILib_printf("for loop works in checkFoodCollision\n");
 }
+
+
 
 
 void Player::updatePlayerDir()
@@ -101,114 +112,97 @@ void Player::updatePlayerDir()
     mainGameMechsRef->clearInput(); //clear input buffer
 }
 
-void Player::movePlayer(Food* myFood)
+void Player::movePlayer(Food *myFood)
 {
     // PPA3 Finite State Machine logic
 
     objPos tempPos;
 
-    objPos currHead;   //holding pos info of current head
+    objPos currHead; // holding pos info of current head
     playerPosList->getHeadElement(currHead);
-    
 
     objPos tempFood;
     myFood->getFoodPos(tempFood);
 
-     switch (myDir)
+    switch (myDir)
     {
-        case UP:
-            currHead.y--;
-            if (currHead.y==0)
-            {
-                currHead.y=mainGameMechsRef->getBoardSizeY()-2;
-            }
-            break;
+    case UP:
+        currHead.y--;
+        if (currHead.y == 0)
+        {
+            currHead.y = mainGameMechsRef->getBoardSizeY() - 2;
+        }
+        break;
 
-        case DOWN:
-            currHead.y++;
-            if (currHead.y==mainGameMechsRef->getBoardSizeY()-1)
-            {
-                currHead.y=1;
-            }
-            break;
+    case DOWN:
+        currHead.y++;
+        if (currHead.y == mainGameMechsRef->getBoardSizeY() - 1)
+        {
+            currHead.y = 1;
+        }
+        break;
 
-        case LEFT:
-            currHead.x--;
-            if (currHead.x==0)
-            {
-                currHead.x=mainGameMechsRef->getBoardSizeX()-2;
-            }
-            break;
+    case LEFT:
+        currHead.x--;
+        if (currHead.x == 0)
+        {
+            currHead.x = mainGameMechsRef->getBoardSizeX() - 2;
+        }
+        break;
 
-        case RIGHT:
-            currHead.x++;
-            if (currHead.x==mainGameMechsRef->getBoardSizeX()-1)
-            {
-                currHead.x=1;
-            }
-            break;
+    case RIGHT:
+        currHead.x++;
+        if (currHead.x == mainGameMechsRef->getBoardSizeX() - 1)
+        {
+            currHead.x = 1;
+        }
+        break;
 
-        case STOP:
-            break;
+    case STOP:
+        break;
     }
 
-    // if (currHead.x==mainGameMechsRef->getBoardSizeX()-1)
-    // {
-    //     currHead.x=1;
-    // }
-    // else if (currHead.x==0)
-    // {
-    //     currHead.x=mainGameMechsRef->getBoardSizeX()-2;
-    // }
-    // else if (currHead.y==0)
-    // {
-    //     currHead.y=mainGameMechsRef->getBoardSizeY()-2;
-    // }
-    // else if (currHead.y==mainGameMechsRef->getBoardSizeY()-1)
-    // {
-    //     currHead.y=1;
-    // }
-
-    // if(tempFood.x == currHead.x && tempFood.y == currHead.y) //if food and player collision detected
-    // {
-    //     playerPosList->insertHead(currHead);
-    //     mainGameMechsRef->incrementScore();
-    //     myFood->generateFood(playerPosList);
-    // }
-
-    if(checkFoodCollision(tempPos, foodBucket) == false)
+    MacUILib_printf("movePlayer works before implementing collision logic\n");
+    if (checkFoodCollision(tempPos) == false)
     {
         playerPosList->insertHead(tempPos);
-        mainGameMechsRef->incrementScore();
+        mainGameMechsRef->incrementScore(true);
         myFood->generateFood(playerPosList);
+        MacUILib_printf("movePlayer works after implementing collision logic for special =true\n");
     }
 
-    else if(checkFoodCollision(tempPos, foodBucket) == true)
+    else if (checkFoodCollision(tempPos) == true)
     {
         playerPosList->insertHead(tempPos);
         playerPosList->removeTail();
-        mainGameMechsRef->incrementScore();
+        mainGameMechsRef->incrementScore(false);
         // myFood->generateFood(playerPosList);
+        MacUILib_printf("movePlayer works after implementing collision logic for special =false\n");
     }
 
-    else //if no collision detected
+    else // if no collision detected
     {
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
+        MacUILib_printf("movePlayer works after implementing collision logic and there is no collision\n");
     }
+}
+void Player::checkSnakeSuicide()
+{   
+    objPos tempVar;
+    objPos currentHead;   //holding pos info of current head
+    playerPosList->getHeadElement(currentHead);
+    int size = playerPosList->getSize();
 
-    int size=playerPosList->getSize();
-    
-    for (int i=1;i<size;i++)
+    for (int i = 1; i < size; i++)
     {
-        playerPosList->getElement(tempPos,i); //turn self collison into member function
+        playerPosList->getElement(tempVar, i); // turn self collison into member function
 
-        if(currHead.x==tempPos.x && currHead.y==tempPos.y) //if self collision detected
+        if (currentHead.x == tempVar.x && currentHead.y == tempVar.y) // if self collision detected
         {
             mainGameMechsRef->setLoseFlag();
             mainGameMechsRef->setExitTrue();
+            break;
         }
-
     }
- 
 }

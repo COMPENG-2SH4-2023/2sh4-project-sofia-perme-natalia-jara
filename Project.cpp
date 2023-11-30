@@ -47,8 +47,8 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     myGM = new GameMechs(26,13); //set board size using additional constructor
-    myPlayer = new Player(myGM);
     myFood = new Food(myGM); //for food generation
+    myPlayer = new Player(myGM,myFood);
 
     objPos playerPos;
 
@@ -68,9 +68,12 @@ void RunLogic(void)
 
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer(myFood);
+    myPlayer->checkSnakeSuicide();
+    
 
     myPlayer->getPlayerPos();
     myFood->getFoodPos(foodPos);
+    // myPlayer->checkSnakeSuicide();
 
     myGM->clearInput(); //so input is not repeatedly processed
 
