@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Food.h"
 #include "MacUILib.h"
 #include <iostream>
 
@@ -12,7 +11,7 @@ Player::Player(GameMechs* thisGMRef)
 
     // more actions to be included
     objPos tempPos;
-    // tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '@');     //possible to write in simpler way--research way
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '@');     //possible to write in simpler way--research way
     tempPos.setObjPos(4,4, '@');
 
     playerPosList=new objPosArrayList();
@@ -39,15 +38,7 @@ objPosArrayList* Player::getPlayerPos()
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic 
-
-    //Where do I get the input where do I check for input
-    //input-not by calling get char 
-    // coordinate with teammemeber whos desining game mechanism
-    // objPos myPos;
-    //GameMechs* myGM;
     char input = mainGameMechsRef->getInput();
-    // bool setExitTrue=mainGameMechsRef->setExitTrue();
     switch(input)
     {
         case ' ':
@@ -84,18 +75,7 @@ void Player::updatePlayerDir()
                 myDir = RIGHT;
             }
             break;
-        // case 'p':
-        // case 'P':
-        //     mainGameMechsRef->incrementScore();
-        //     break;
-
-        case 'k':
-        case 'K':
-            mainGameMechsRef->setLoseFlag();
-            break;
-
     }  
-
     mainGameMechsRef->clearInput(); //clear input buffer
 }
 
@@ -112,7 +92,7 @@ void Player::movePlayer(Food* myFood)
     objPos tempFood;
     myFood->getFoodPos(tempFood);
 
-     switch (myDir)
+    switch (myDir)
     {
     case UP:
         currHead.y--;
@@ -169,13 +149,4 @@ void Player::movePlayer(Food* myFood)
         }
 
     }
-
-
-
-    
-
-    //new current head should be insertedto the head of the list
-    // playerPosList->insertHead(currHead);
-    // then remove tail
-    // playerPosList->removeTail();
 }
