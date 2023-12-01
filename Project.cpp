@@ -110,8 +110,9 @@ void DrawScreen()
         }
         MacUILib_printf("%s", "\n");
     }
-    MacUILib_printf("Score: %d", myGM->getScore());
-    MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());
+    MacUILib_printf("Welcome to SNAKE GAME! Press space bar to exit.");
+    MacUILib_printf("\nScore: %d", myGM->getScore());
+    //MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());
 }
 
 void LoopDelay(void)
@@ -122,15 +123,18 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     // MacUILib_clearScreen();
-    if (myGM->getLoseFlagStatus()==false)
+    if (myGM->getLoseFlagStatus()==false && myGM->getExitFlagStatus() == true)
     {
-        MacUILib_printf("\nEXIT GAME");
+        MacUILib_printf("%s", "\n");
+        MacUILib_printf("\nEXIT GAME.");
+        MacUILib_printf("\nYOUR FINAL SCORE: %d", myGM->getScore());
         MacUILib_uninit();
     }
      if (myGM->getLoseFlagStatus()==true)
      {
-        MacUILib_printf("\nEXIT GAME");
-        MacUILib_printf("\nYOU LOST");
+        MacUILib_printf("%s", "\n");
+        MacUILib_printf("\nSNAKE RAN INTO ITSELF... YOU LOSE :(");
+        MacUILib_printf("\nYOUR FINAL SCORE: %d", myGM->getScore());
         MacUILib_uninit();
      }
 

@@ -85,36 +85,56 @@ void Player::movePlayer(Food *myFood)
     {
     case UP:
         currHead.y--;
+        if (currHead.y == 0) //PPA2 wraparound border logic
+        {
+            currHead.y = mainGameMechsRef->getBoardSizeY() - 2;
+        }
         break;
+
     case DOWN:
         currHead.y++;
+        if (currHead.y == mainGameMechsRef->getBoardSizeY() - 1)
+        {
+            currHead.y = 1;
+        }
         break;
+
     case LEFT:
         currHead.x--;
+        if (currHead.x == 0)
+        {
+            currHead.x = mainGameMechsRef->getBoardSizeX() - 2;
+        }
         break;
+
     case RIGHT:
         currHead.x++;
+        if (currHead.x == mainGameMechsRef->getBoardSizeX() - 1)    //PPA2 wraparound border logic
+        {
+            currHead.x = 1;
+        }
         break;
+
     case STOP:
         break;
     }
 
-    if (currHead.x == mainGameMechsRef->getBoardSizeX() - 1)    //PPA2 wraparound border logic
-    {
-        currHead.x = 1;
-    }
-    else if (currHead.x == 0)
-    {
-        currHead.x = mainGameMechsRef->getBoardSizeX() - 2;
-    }
-    else if (currHead.y == 0)
-    {
-        currHead.y = mainGameMechsRef->getBoardSizeY() - 2;
-    }
-    else if (currHead.y == mainGameMechsRef->getBoardSizeY() - 1)
-    {
-        currHead.y = 1;
-    }
+    // if (currHead.x == mainGameMechsRef->getBoardSizeX() - 1)    //PPA2 wraparound border logic
+    // {
+    //     currHead.x = 1;
+    // }
+    // else if (currHead.x == 0)
+    // {
+    //     currHead.x = mainGameMechsRef->getBoardSizeX() - 2;
+    // }
+    // else if (currHead.y == 0)
+    // {
+    //     currHead.y = mainGameMechsRef->getBoardSizeY() - 2;
+    // }
+    // else if (currHead.y == mainGameMechsRef->getBoardSizeY() - 1)
+    // {
+    //     currHead.y = 1;
+    // }
 
     foodBucket->getByPos(foodItem,currHead.x,currHead.y);
     if (foodItem.symbol != '\0')                               //checks to make sure that the foodBucket item symbol is not null
