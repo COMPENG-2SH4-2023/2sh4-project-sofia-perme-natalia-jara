@@ -26,6 +26,24 @@ objPosArrayList *Player::getPlayerPos()
     return playerPosList;
 }
 
+bool Player ::checkSnakeSuicide()
+{
+    objPos tempPos;
+    objPos currHead;
+        
+    objPosArrayList * playerPosList;
+    int size = playerPosList->getSize(); // check for snake self-suicide
+    for (int i = 1; i < size; i++)
+    {
+        playerPosList->getElement(tempPos, i);
+        if (currHead.x == tempPos.x && currHead.y == tempPos.y) // if any of the snake body elements are equal to the head the set both exit and lose flags to true
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Player::updatePlayerDir()
 {
     char input = mainGameMechsRef->getInput();
@@ -140,15 +158,11 @@ void Player::movePlayer(Food *myFood)
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
     }
-
-    int size = playerPosList->getSize();            //check for snake self-suicide
-    for (int i = 1; i < size; i++)
+    
+    if (checkSnakeSuicide())
     {
-        playerPosList->getElement(tempPos, i);
-        if (currHead.x == tempPos.x && currHead.y == tempPos.y)    //if any of the snake body elements are equal to the head the set both exit and lose flags to true
-        {
-            mainGameMechsRef->setLoseFlag();
-            mainGameMechsRef->setExitTrue();
-        }
+        mainGameMechsRef->setLoseFlag();
+        mainGameMechsRef->setExitTrue();
     }
 }
+

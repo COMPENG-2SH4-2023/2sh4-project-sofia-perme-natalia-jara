@@ -24,6 +24,7 @@ public:
     objPosArrayList *getPlayerPos();
     void updatePlayerDir();
     void movePlayer(Food *myFood);
+    bool checkSnakeSuicide();
 
 private:
     objPosArrayList *playerPosList;
@@ -31,6 +32,7 @@ private:
 
     // Need a reference to the Main Game Mechanisms
     GameMechs *mainGameMechsRef;
+
 };
 
 #endif
