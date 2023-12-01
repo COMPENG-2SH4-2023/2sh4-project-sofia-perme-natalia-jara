@@ -70,9 +70,5 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
-    // if (index<0 || index>=listSize)
-    // {
-    //     // throw std::out_of_range("Invalid indexes.");
-    // }
     return returnPos.setObjPos(aList[index]);
 }

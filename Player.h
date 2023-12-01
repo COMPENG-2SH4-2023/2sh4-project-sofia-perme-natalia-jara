@@ -11,7 +11,6 @@ class Player
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // direction states
 
-        // Player(GameMechs* thisGMRef);
         Player(GameMechs* thisGMRef,Food * thisFoodRef);
         ~Player();
 
@@ -22,10 +21,6 @@ class Player
         //bool checkSelfCollision(); //feature 3, iteration 3
         char checkFoodCollision(objPos tempPos); //problem is we are creating new foodBucket from objPos not calling already filled one from food class
         bool checkSnakeSuicide();
-
-        // objPosArrayList*setFoodBucket(Food * myFood,objPosArrayList* foodBucket);
-
-
 
     private:
         objPosArrayList *playerPosList;

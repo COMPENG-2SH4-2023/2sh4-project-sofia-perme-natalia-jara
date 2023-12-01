@@ -93,7 +93,7 @@ void DrawScreen()
     int width = myGM->getBoardSizeX();
     int snakeSize = playerBody->getSize();
     
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < height; i++)     //PPA3 DrawScreen logic/implementation with additional foodBucket items being printed using same elogic
     {
         for (int j = 0; j < width; j++)
         {
