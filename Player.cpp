@@ -75,6 +75,7 @@ void Player::movePlayer(Food *myFood)
     // PPA3 Finite State Machine logic
 
     objPos tempPos;
+    objPos foodItem;
 
     objPos currHead; // holdingh pos info of current head
     playerPosList->getHeadElement(currHead);
@@ -116,10 +117,23 @@ void Player::movePlayer(Food *myFood)
         currHead.y = 1;
     }
 
-    if (foodBucket->containsPos(currHead))
+    foodBucket->getByPos(foodItem,currHead.x,currHead.y);
+    if (foodItem.symbol != '\0')
     {
+            switch (foodItem.symbol)
+            {
+                case 'o':                                       //normal case 'o'
+                mainGameMechsRef->incrementScore();
+                break;
+                case 'x':                                       //case 'x' increase score by 3 without increasing size
+                mainGameMechsRef->incrementScore();
+                mainGameMechsRef->incrementScore();
+                mainGameMechsRef->incrementScore();
+                break;
+                case 'p':                                        //case 'p' decrease score by 1
+                mainGameMechsRef->decreaseScore(); 
+            }
         playerPosList->insertHead(currHead);
-        mainGameMechsRef->incrementScore();
         myFood->generateFoodBucket(playerPosList);
     }
     else // if no collision detected

@@ -89,24 +89,24 @@ GameMechs::~GameMechs()
 int GameMechs::getScore()
 {
     return score;
-    //MacUILib_printf("Score: ", score);
-
 }
 
 void GameMechs::incrementScore()
 {
     score++;
-    //MacUILib_printf("Score: ", score);
+}
+
+void GameMechs::decreaseScore()
+{
+    score--;
 }
 
 bool GameMechs::getLoseFlagStatus()
 {
     return loseFlag;
-    //MacUILib_printf("You lose");
 }
 
 bool GameMechs::setLoseFlag()
 {
     loseFlag = true;
-    //MacUILib_printf("You lose");
 }

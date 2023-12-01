@@ -4,7 +4,6 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
-using namespace std;
 
 Food::Food(GameMechs *thisGMRef)
 {
@@ -17,22 +16,30 @@ Food::~Food()
     delete foodBucket;
 }
 
-void Food::generateFoodBucket(objPosArrayList *blockOffList)
+int Food::generateFoodBucket(objPosArrayList *blockOffList)
 {
+    int counter = 0;
     foodBucket->clear();
-    for (int i = 0; i < mainGameMechsRef->getFoodNum(); i++)
+    int regularFeaturesNum = mainGameMechsRef->getFoodNum() - mainGameMechsRef->getFeaturesNum();
+    for (int i = 0; i < regularFeaturesNum; i++)
     {
-        generateFood(blockOffList);
+        generateFood(blockOffList, false);
     }
+    for (int i = 0; i < mainGameMechsRef->getFeaturesNum(); i++)
+    {
+        generateFood(blockOffList, true);
+    }
+    return counter;
 }
 
-void Food::generateFood(objPosArrayList *blockOffList)
+bool Food::generateFood(objPosArrayList *blockOffList, bool special)
 {
     srand(time(NULL));
 
     int xVal;
     int yVal;
     int counter;
+    int randNum;
     objPos foodPos;
 
     while (true)
@@ -42,14 +49,54 @@ void Food::generateFood(objPosArrayList *blockOffList)
 
         if (!contains(blockOffList, xVal, yVal) && !contains(foodBucket, xVal, yVal))
         {
+            foodPos.symbol = generateSymbol(special);
             foodPos.x = xVal;
             foodPos.y = yVal;
-            foodPos.symbol = '*';
             foodBucket->insertTail(foodPos);
             break;
         }
     }
 }
+
+char Food::generateSymbol(bool special) // generates symbol using rand() function
+{
+    if (!special)
+    {
+        return 'o';
+    }
+    int randNum;
+    char symbol;
+    randNum = (rand() % 2);
+    switch (randNum)
+    {
+    case 0:
+        symbol = 'x';
+        break;
+    case 1:
+        symbol = 'p';
+        break;
+    }
+    return symbol;
+}
+
+bool Food::checkFoodBucket()
+{
+    int counter = 0;
+    objPos foodItem;
+    for (int i = 0; i < foodBucket->getSize(); i++)
+    {
+        foodBucket->getElement(foodItem, i);
+        if (foodItem.symbol == 'o')
+        {
+            counter++;
+        }
+    }
+    if (counter == 2)
+    {
+        return true;
+    }
+}
+
 
 bool Food::contains(objPosArrayList *blockOffList, int x, int y)
 {

@@ -1,7 +1,7 @@
 #include "objPosArrayList.h"
 #include <stdexcept>
 #include <iostream>
-using namespace std;
+
 
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.

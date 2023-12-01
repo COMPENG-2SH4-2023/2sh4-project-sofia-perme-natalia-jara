@@ -22,7 +22,7 @@ class Player
 
         objPosArrayList* getPlayerPos(); // Upgrade this in iteration 3.
         void updatePlayerDir();
-        void movePlayer(Food* myFood);
+        void movePlayer(Food * myFood);
 
     private:
         objPosArrayList *playerPosList;   // Upgrade this in iteration 3.      

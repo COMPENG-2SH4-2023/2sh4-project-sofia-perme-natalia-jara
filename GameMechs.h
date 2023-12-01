@@ -7,8 +7,6 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
-using namespace std;
-
 
 class GameMechs
 {
@@ -51,6 +49,7 @@ class GameMechs
 
         int getScore();
         void incrementScore();
+        void decreaseScore();
 
         bool getLoseFlagStatus();
         bool setLoseFlag();

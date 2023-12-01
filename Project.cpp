@@ -6,7 +6,6 @@
 #include "Food.h"
 #include <time.h>
 
-using namespace std;
 
 // #define DELAY_CONST 100000 
 #define DELAY_CONST 200000
@@ -50,11 +49,11 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(20,10,FOOD_NUM,FEATURES_NUM); // need to delete from heap?
+    myGM = new GameMechs(30,15,FOOD_NUM,FEATURES_NUM); // need to delete from heap?
     myPlayer = new Player(myGM);
     myFood = new Food(myGM);
-
     myFood->generateFoodBucket(myPlayer->getPlayerPos());
+
  }
 
 void GetInput(void)

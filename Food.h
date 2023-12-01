@@ -9,9 +9,6 @@
 #include "GameMechs.h"
 
 
-using namespace std;
-
-
 class Food
 {
     private:
@@ -21,20 +18,24 @@ class Food
         // internal function to check generated coordinates against blockOffList
         bool contains(objPosArrayList* blockOffList,int x,int y);
         
+        // generates food where positions must not overlap blockOffList elements
+        bool generateFood(objPosArrayList* blockOffList, bool special);
 
+        // enum specialfeatures={};
+        
     public:
         Food(GameMechs* thisGMRef);
         ~Food();
 
-        // generates food where positions must not overlap blockOffList elements
-        void generateFood(objPosArrayList* blockOffList);
-
         // generates food bucket where positions must not overlap blockOffList elements
-        void generateFoodBucket(objPosArrayList* blockOffList);
+        int generateFoodBucket(objPosArrayList* blockOffList);
 
         // / returns generated food bucket
         objPosArrayList* getFoodBucket();
-        
+
+        char generateSymbol(bool special);
+
+        bool checkFoodBucket();
 };
 
 #endif
