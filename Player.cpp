@@ -150,7 +150,6 @@ void Player::movePlayer(Food *myFood)
         break;
     }
 
-    MacUILib_printf("movePlayer works before implementing collision logic\n");
     if (checkSnakeSuicide())
     {
         mainGameMechsRef->setLoseFlag();
@@ -163,7 +162,6 @@ void Player::movePlayer(Food *myFood)
         playerPosList->insertHead(currHead);
         mainGameMechsRef->incrementScore('o');
         myFood->generateFood(playerPosList);
-        MacUILib_printf("movePlayer works after implementing collision logic for special =true\n");
         return;
     }
 
@@ -173,14 +171,12 @@ void Player::movePlayer(Food *myFood)
         playerPosList->removeTail();
         mainGameMechsRef->incrementScore('x');
         myFood->generateFood(playerPosList);
-        MacUILib_printf("movePlayer works after implementing collision logic for special =false\n");
         return;
     }
 
     // if no collision detected
     playerPosList->insertHead(currHead);
     playerPosList->removeTail();
-    MacUILib_printf("movePlayer works after implementing collision logic and there is no collision\n");
 }
 bool Player::checkSnakeSuicide()
 {   
@@ -195,7 +191,6 @@ bool Player::checkSnakeSuicide()
 
         if (currentHead.x == snakeBody.x && currentHead.y == snakeBody.y) // if self collision detected
         {
-            MacUILib_printf("head.x is at %d, head.y is at %d, collision.x is at %d, collision.y is at %d", currentHead.x, currentHead.y, snakeBody.x, snakeBody.y);
             return true;
         }
     }

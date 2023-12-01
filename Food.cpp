@@ -39,6 +39,13 @@ void Food::generateFood(objPosArrayList* blockOffList)
         {
             continue;
         }
+        for (int i=0; i<foodBucket->getSize();i++)
+        {
+            if (xVal==foodPos.x && yVal==foodPos.y)
+            {
+                continue;
+            }
+        }
 
         foodPos.x = xVal; //food position can be set once no conflict is detected
         foodPos.y = yVal;
@@ -59,6 +66,13 @@ void Food::generateFood(objPosArrayList* blockOffList)
         if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
         {
             continue;
+        }
+        for (int j=2; i<foodBucket->getSize();i++)
+        {
+            if (xVal==foodPos.x && yVal==foodPos.y)
+            {
+                continue;
+            }
         }
 
         foodPos.x = xVal; //food position can be set once no conflict is detected
