@@ -76,12 +76,12 @@ int GameMechs::getScore()
 
 void GameMechs::incrementScore(char symbol)
 {
-    if(symbol == 'x')
+    if(symbol == 'x')             //if special character increment score by 5
     {
         score += 5;
     }
 
-    else
+    else                         //else if regular increment by 1
     {
         score += 1;
     }

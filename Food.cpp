@@ -20,15 +20,13 @@ Food::~Food()
 void Food::generateFood(objPosArrayList* blockOffList)
 {
     srand(time(NULL));
-
-    //bool conflict = true;
     int xVal;
     int yVal;
     objPos playerTemp;
     bool conflict=true;
     
     int i = 0;
-    while(i < 2) //checking each element of snake body
+    while(i < 2) //to generate first two special food objects
     {
         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
@@ -39,7 +37,7 @@ void Food::generateFood(objPosArrayList* blockOffList)
         {
             continue;
         }
-        for (int i=0; i<foodBucket->getSize();i++)
+        for (int i=0; i<foodBucket->getSize();i++)   //check if pos is same as foodpos on board
         {
             if (xVal==foodPos.x && yVal==foodPos.y)
             {
@@ -52,11 +50,10 @@ void Food::generateFood(objPosArrayList* blockOffList)
         foodPos.symbol = 'x';
         foodBucket->insertTail(foodPos);
         i++;
-        MacUILib_printf("FoodBucket[%d]:%d,%d,%c\n",i,foodPos.x,foodPos.y,foodPos.symbol);
     }
 
     int j = 2;
-    while(j < 5) //checking each element of snake body
+    while(j < 5) //generating 3 elements (from 2-5) of regular food objects
     {
         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
@@ -67,7 +64,7 @@ void Food::generateFood(objPosArrayList* blockOffList)
         {
             continue;
         }
-        for (int j=2; i<foodBucket->getSize();i++)
+        for (int j=2; i<foodBucket->getSize();i++) //check if pos is same as foodpos on board
         {
             if (xVal==foodPos.x && yVal==foodPos.y)
             {
@@ -80,7 +77,6 @@ void Food::generateFood(objPosArrayList* blockOffList)
         foodPos.symbol = 'o';
         foodBucket->insertTail(foodPos);
         j++;
-        MacUILib_printf("FoodBucket[%d]:%d,%d,%c\n",i,foodPos.x,foodPos.y,foodPos.symbol);
     }
 }
 
@@ -91,5 +87,5 @@ void Food::getFoodPos(objPos &returnPos)
 
 objPosArrayList* Food::getFoodBucket()
 {
-    return foodBucket;
+    return foodBucket;                   
 }
