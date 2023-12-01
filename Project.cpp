@@ -7,8 +7,7 @@
 #include <time.h>
 
 
-// #define DELAY_CONST 100000 
-#define DELAY_CONST 200000
+#define DELAY_CONST 100000 
 
 #define FOOD_NUM 5
 #define FEATURES_NUM 2
