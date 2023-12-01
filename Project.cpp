@@ -18,7 +18,6 @@ using namespace std;
 GameMechs* myGM; //should i be using destructor function to remove from heap or just delete call?
 Player* myPlayer;//should i move these heap variables into their respective classes?
 Food* myFood;
-objPosArrayList* foodBucket;
 
 
 void Initialize(void);
@@ -50,21 +49,13 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    // myPos.setObjPos(2,3,'@');
 
     myGM = new GameMechs(20,10,FOOD_NUM,FEATURES_NUM); // need to delete from heap?
     myPlayer = new Player(myGM);
-    foodBucket=new objPosArrayList();
-    myFood = new Food(myGM,foodBucket);
-    // exit flag removed because object myGM already has flag = false
+    myFood = new Food(myGM);
 
-    objPos playerPos;
-    objPosArrayList* playerBody = myPlayer->getPlayerPos();
-    
-    // myFood->generateFood(playerBody,true);
-    // myFood->generateFood(playerBody,true);
-    // myFood->generateFood(playerBody,true);
-}
+    myFood->generateFoodBucket(myPlayer->getPlayerPos());
+ }
 
 void GetInput(void)
 {
@@ -73,16 +64,12 @@ void GetInput(void)
 
 void RunLogic(void) 
 {
-    objPos playerPos;
-    objPos foodPos;
-
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer(myFood);
 
     myGM->clearInput();
 
     myPlayer->getPlayerPos();
-    myFood->getFoodPos(foodPos);
 
 }
 
@@ -91,50 +78,42 @@ void DrawScreen()
     MacUILib_clearScreen();
 
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
-
-    // myFood->getFoodPos(foodPos);
-    // foodBucket->getElement(foodPos);
-
-    bool drawn;
+    objPosArrayList* foodBucket = myFood->getFoodBucket();
 
     int height = myGM->getBoardSizeY();
     int width = myGM->getBoardSizeX();
     int snakeSize = playerBody->getSize();
-
-    
     
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            objPos tempBody;
-            drawn = false;
-            playerBody->getByPos(tempBody,i,j);
+            objPos playerPos;
+            playerBody->getByPos(playerPos,j,i);
             objPos foodPos;
-            foodBucket->getByPos(foodPos,i,j);
+            myFood->getFoodBucket()->getByPos(foodPos,j,i);
   
             if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
             { // Use to check when reaching end/beginning of board in order to draw sides
                 MacUILib_printf("%s","#");
             }
-            else if(tempBody.symbol!=0)
+            else if(playerPos.symbol!='\0')
             {
-                MacUILib_printf("%c",tempBody.symbol);
+                MacUILib_printf("%c",playerPos.symbol);
             }
-            else if(foodPos.symbol!=0)
+            else if(foodPos.symbol!='\0')
             {
                 MacUILib_printf("%c",foodPos.symbol);
             }
             else
             {
-                MacUILib_printf("%s"," ");
+                MacUILib_printf("%c",' ');
             }
         }
         MacUILib_printf("%s", "\n");
     }
     MacUILib_printf("Score: %d", myGM->getScore());
     MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());
-    // MacUILib_printf("\nFood Pos: <%d, %d>, + %c\n", foodPos.x, foodPos.y, foodPos.symbol);
 }
 
 void LoopDelay(void)
