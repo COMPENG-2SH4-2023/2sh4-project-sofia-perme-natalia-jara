@@ -137,22 +137,6 @@ void Player::movePlayer(Food *myFood)
         break;
     }
 
-    // if (currHead.x == mainGameMechsRef->getBoardSizeX() - 1)    //PPA2 wraparound border logic
-    // {
-    //     currHead.x = 1;
-    // }
-    // else if (currHead.x == 0)
-    // {
-    //     currHead.x = mainGameMechsRef->getBoardSizeX() - 2;
-    // }
-    // else if (currHead.y == 0)
-    // {
-    //     currHead.y = mainGameMechsRef->getBoardSizeY() - 2;
-    // }
-    // else if (currHead.y == mainGameMechsRef->getBoardSizeY() - 1)
-    // {
-    //     currHead.y = 1;
-    // }
 
     if (checkSnakeSuicide())  //if self collision detected set exit game and lose flags
     {
