@@ -111,7 +111,8 @@ void DrawScreen()
         MacUILib_printf("%s", "\n");
     }
     MacUILib_printf("Welcome to SNAKE GAME! Press space bar to exit.");
-    MacUILib_printf("\nScore: %d", myGM->getScore());
+    MacUILib_printf("\nPlayer Score: %d", myGM->getScore());
+    MacUILib_printf("\nSnake Length: %d", playerBody->getSize());
     //MacUILib_printf("\nLose flag: %d", myGM->getLoseFlagStatus());
 }
 
