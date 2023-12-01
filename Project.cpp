@@ -9,7 +9,7 @@
 using namespace std;
 
 // #define DELAY_CONST 100000 
-#define DELAY_CONST 200000 //fix this
+#define DELAY_CONST 100000 //fix this
 
 //Global scope - as done and allowed in tutorial
 GameMechs* myGM; 
@@ -46,7 +46,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(26,13); //set board size using additional constructor
+    myGM = new GameMechs(30,15); //set board size using additional constructor
     myFood = new Food(myGM); //for food generation
     myPlayer = new Player(myGM,myFood);
 
@@ -68,12 +68,10 @@ void RunLogic(void)
 
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer(myFood);
-    myPlayer->checkSnakeSuicide();
     
 
     myPlayer->getPlayerPos();
     myFood->getFoodPos(foodPos);
-    // myPlayer->checkSnakeSuicide();
 
     myGM->clearInput(); //so input is not repeatedly processed
 

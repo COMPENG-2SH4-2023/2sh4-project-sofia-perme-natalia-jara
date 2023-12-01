@@ -74,16 +74,16 @@ int GameMechs::getScore()
     return score;
 }
 
-void GameMechs::incrementScore(bool special)
+void GameMechs::incrementScore(char symbol)
 {
-    if(special == false)
+    if(symbol == 'x')
     {
-        score += 1;
+        score += 5;
     }
 
     else
     {
-        score += 5;
+        score += 1;
     }
 }
 

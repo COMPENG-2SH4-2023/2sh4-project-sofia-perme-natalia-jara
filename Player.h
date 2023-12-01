@@ -20,8 +20,8 @@ class Player
         void movePlayer(Food* myFood);
 
         //bool checkSelfCollision(); //feature 3, iteration 3
-        bool checkFoodCollision(objPos tempPos); //problem is we are creating new foodBucket from objPos not calling already filled one from food class
-        void checkSnakeSuicide();
+        char checkFoodCollision(objPos tempPos); //problem is we are creating new foodBucket from objPos not calling already filled one from food class
+        bool checkSnakeSuicide();
 
         // objPosArrayList*setFoodBucket(Food * myFood,objPosArrayList* foodBucket);
 

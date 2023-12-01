@@ -19,7 +19,6 @@ Food::~Food()
 
 void Food::generateFood(objPosArrayList* blockOffList)
 {
-
     srand(time(NULL));
 
     //bool conflict = true;
@@ -28,8 +27,8 @@ void Food::generateFood(objPosArrayList* blockOffList)
     objPos playerTemp;
     bool conflict=true;
     
-
-    for(int i = 0; i < 2; i++) //checking each element of snake body
+    int i = 0;
+    while(i < 2) //checking each element of snake body
     {
         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
@@ -43,17 +42,19 @@ void Food::generateFood(objPosArrayList* blockOffList)
 
         foodPos.x = xVal; //food position can be set once no conflict is detected
         foodPos.y = yVal;
-        foodPos.symbol = '+';
+        foodPos.symbol = 'x';
         foodBucket->insertTail(foodPos);
+        i++;
         MacUILib_printf("FoodBucket[%d]:%d,%d,%c\n",i,foodPos.x,foodPos.y,foodPos.symbol);
     }
 
-    for(int i = 2; i < 5; i++) //checking each element of snake body
+    int j = 2;
+    while(j < 5) //checking each element of snake body
     {
         xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
         yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
 
-        blockOffList->getElement(playerTemp, i); //get snake body element at for loop index
+        blockOffList->getElement(playerTemp, j); //get snake body element at for loop index
 
         if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
         {
@@ -64,6 +65,7 @@ void Food::generateFood(objPosArrayList* blockOffList)
         foodPos.y = yVal;
         foodPos.symbol = 'o';
         foodBucket->insertTail(foodPos);
+        j++;
         MacUILib_printf("FoodBucket[%d]:%d,%d,%c\n",i,foodPos.x,foodPos.y,foodPos.symbol);
     }
 }

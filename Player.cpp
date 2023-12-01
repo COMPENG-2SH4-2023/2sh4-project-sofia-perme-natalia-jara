@@ -11,7 +11,7 @@ Player::Player(GameMechs* thisGMRef,Food * thisFoodRef )
     myDir = STOP;
 
     objPos tempPos;
-    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '@');     //possible to write in simpler way--research way
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2,mainGameMechsRef->getBoardSizeY() / 2, '*');     //possible to write in simpler way--research way
 
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
@@ -30,32 +30,28 @@ objPosArrayList* Player::getPlayerPos()
 }
 
 
-bool Player::checkFoodCollision(objPos tempPos)
+char Player::checkFoodCollision(objPos tempPos)
 {
     objPos foodPos;
-    bool special;
-
     objPosArrayList * foodBucket = foodRef->getFoodBucket(); //getting abd filling empty objArrayList with foodBucket list
 
     for(int i = 0; i < foodBucket->getSize(); i++)   
     {
+        foodBucket->getElement(foodPos, i);
 
-        if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == 'o')
+        if(foodPos.x == tempPos.x && foodPos.y == tempPos.y) 
         {
-            special = false;
-            break;
+            foodBucket->removeTail();
+            foodBucket->removeTail();
+            foodBucket->removeTail();
+            foodBucket->removeTail();
+            foodBucket->removeTail();
 
-        }
-
-        if(foodPos.x == tempPos.x && foodPos.y == tempPos.y && foodPos.symbol == '+')
-        {
-            special = true;
-            break;
-            // return true;
+            return foodPos.symbol;
         }
     }
-    return special;
 
+    return 'n';
 }
 
 
@@ -113,13 +109,8 @@ void Player::movePlayer(Food *myFood)
 {
     // PPA3 Finite State Machine logic
 
-    objPos tempPos;
-
     objPos currHead; // holding pos info of current head
     playerPosList->getHeadElement(currHead);
-
-    objPos tempFood;
-    myFood->getFoodPos(tempFood);
 
     switch (myDir)
     {
@@ -160,31 +151,38 @@ void Player::movePlayer(Food *myFood)
     }
 
     MacUILib_printf("movePlayer works before implementing collision logic\n");
-    if (checkFoodCollision(tempPos) == false)
+    if (checkSnakeSuicide())
     {
-        playerPosList->insertHead(tempPos);
-        mainGameMechsRef->incrementScore(true);
+        mainGameMechsRef->setLoseFlag();
+        mainGameMechsRef->setExitTrue();
+    }
+    char sym = checkFoodCollision(currHead);
+
+    if (sym == 'o')
+    {
+        playerPosList->insertHead(currHead);
+        mainGameMechsRef->incrementScore('o');
         myFood->generateFood(playerPosList);
         MacUILib_printf("movePlayer works after implementing collision logic for special =true\n");
+        return;
     }
 
-    else if (checkFoodCollision(tempPos) == true)
-    {
-        playerPosList->insertHead(tempPos);
-        playerPosList->removeTail();
-        mainGameMechsRef->incrementScore(false);
-        // myFood->generateFood(playerPosList);
-        MacUILib_printf("movePlayer works after implementing collision logic for special =false\n");
-    }
-
-    else // if no collision detected
+    if (sym == 'x')
     {
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
-        MacUILib_printf("movePlayer works after implementing collision logic and there is no collision\n");
+        mainGameMechsRef->incrementScore('x');
+        myFood->generateFood(playerPosList);
+        MacUILib_printf("movePlayer works after implementing collision logic for special =false\n");
+        return;
     }
+
+    // if no collision detected
+    playerPosList->insertHead(currHead);
+    playerPosList->removeTail();
+    MacUILib_printf("movePlayer works after implementing collision logic and there is no collision\n");
 }
-void Player::checkSnakeSuicide()
+bool Player::checkSnakeSuicide()
 {   
     objPos snakeBody;
     objPos currentHead;   //holding pos info of current head
@@ -197,9 +195,10 @@ void Player::checkSnakeSuicide()
 
         if (currentHead.x == snakeBody.x && currentHead.y == snakeBody.y) // if self collision detected
         {
-            mainGameMechsRef->setLoseFlag();
-            mainGameMechsRef->setExitTrue();
-            break;
+            MacUILib_printf("head.x is at %d, head.y is at %d, collision.x is at %d, collision.y is at %d", currentHead.x, currentHead.y, snakeBody.x, snakeBody.y);
+            return true;
         }
     }
+
+    return false;
 }
