@@ -23,12 +23,9 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
-        // objPosArrayList* foodBucket;
-
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
-        ~GameMechs();
         
         bool getExitFlagStatus();
         void setExitTrue();
@@ -44,10 +41,7 @@ class GameMechs
         void incrementScore(char symbol);
 
         bool getLoseFlagStatus();
-        bool setLoseFlag();
-
-        // objPosArrayList* getFoodBin(Food * myFood);
-      
+        bool setLoseFlag();   
 };
 
 #endif
