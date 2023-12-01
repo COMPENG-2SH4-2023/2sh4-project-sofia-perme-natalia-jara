@@ -9,8 +9,7 @@ Player::Player(GameMechs *thisGMRef)
 
     // more actions to be included
     objPos tempPos;
-    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '@'); // possible to write in simpler way--research way
-
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '*'); 
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
 }
@@ -30,7 +29,7 @@ objPosArrayList *Player::getPlayerPos()
 void Player::updatePlayerDir()
 {
     char input = mainGameMechsRef->getInput();
-    switch (input)
+    switch (input)                                    //PPA2 input collection logic using (WASD input keys)
     {
     case ' ':
         mainGameMechsRef->setExitTrue();
@@ -77,12 +76,12 @@ void Player::movePlayer(Food *myFood)
     objPos tempPos;
     objPos foodItem;
 
-    objPos currHead; // holdingh pos info of current head
+    objPos currHead; // holding pos info of current head
     playerPosList->getHeadElement(currHead);
 
     objPosArrayList *foodBucket = myFood->getFoodBucket();
 
-    switch (myDir)
+    switch (myDir)                                         //PPA 2 movement logic
     {
     case UP:
         currHead.y--;
@@ -100,7 +99,7 @@ void Player::movePlayer(Food *myFood)
         break;
     }
 
-    if (currHead.x == mainGameMechsRef->getBoardSizeX() - 1)
+    if (currHead.x == mainGameMechsRef->getBoardSizeX() - 1)    //PPA2 wraparound border logic
     {
         currHead.x = 1;
     }
@@ -118,35 +117,35 @@ void Player::movePlayer(Food *myFood)
     }
 
     foodBucket->getByPos(foodItem,currHead.x,currHead.y);
-    if (foodItem.symbol != '\0')
+    if (foodItem.symbol != '\0')                               //checks to make sure that the foodBucket item symbol is not null
     {
             switch (foodItem.symbol)
             {
-                case 'o':                                       //normal case 'o'
-                mainGameMechsRef->incrementScore();
+                case 'o':                                       //normal case 'o' increases score and lenght by 1
+                mainGameMechsRef->incrementScore('o');
+                playerPosList->insertHead(currHead);
                 break;
-                case 'x':                                       //case 'x' increase score by 3 without increasing size
-                mainGameMechsRef->incrementScore();
-                mainGameMechsRef->incrementScore();
-                mainGameMechsRef->incrementScore();
+                case 'x':                                       //special case 'x' increase score by 5 without increasing size
+                mainGameMechsRef->incrementScore('x');
                 break;
-                case 'p':                                        //case 'p' decrease score by 1
+                case 'p':                                        //special case 'p' decreases score by 1 and increases lenght by 1
                 mainGameMechsRef->decreaseScore(); 
+                playerPosList->insertHead(currHead);
             }
-        playerPosList->insertHead(currHead);
+        
         myFood->generateFoodBucket(playerPosList);
     }
-    else // if no collision detected
+    else                                                         // if no collision detected
     {
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
     }
 
-    int size = playerPosList->getSize();
+    int size = playerPosList->getSize();            //check for snake self-suicide
     for (int i = 1; i < size; i++)
     {
         playerPosList->getElement(tempPos, i);
-        if (currHead.x == tempPos.x && currHead.y == tempPos.y)
+        if (currHead.x == tempPos.x && currHead.y == tempPos.y)    //if any of the snake body elements are equal to the head the set both exit and lose flags to true
         {
             mainGameMechsRef->setLoseFlag();
             mainGameMechsRef->setExitTrue();

@@ -16,16 +16,16 @@ Food::~Food()
     delete foodBucket;
 }
 
-int Food::generateFoodBucket(objPosArrayList *blockOffList)
+int Food::generateFoodBucket(objPosArrayList *blockOffList)        
 {
     int counter = 0;
     foodBucket->clear();
-    int regularFeaturesNum = mainGameMechsRef->getFoodNum() - mainGameMechsRef->getFeaturesNum();
-    for (int i = 0; i < regularFeaturesNum; i++)
+    int regularFeaturesNum = mainGameMechsRef->getFoodNum() - mainGameMechsRef->getFeaturesNum();   //subtracting number of regular 'o' food items by special items
+    for (int i = 0; i < regularFeaturesNum; i++)    //generating regular food items
     {
         generateFood(blockOffList, false);
     }
-    for (int i = 0; i < mainGameMechsRef->getFeaturesNum(); i++)
+    for (int i = 0; i < mainGameMechsRef->getFeaturesNum(); i++) //generating special features
     {
         generateFood(blockOffList, true);
     }
@@ -47,9 +47,9 @@ bool Food::generateFood(objPosArrayList *blockOffList, bool special)
         xVal = (rand() % (mainGameMechsRef->getBoardSizeX() - 2) + 1);
         yVal = (rand() % (mainGameMechsRef->getBoardSizeY() - 2) + 1);
 
-        if (!contains(blockOffList, xVal, yVal) && !contains(foodBucket, xVal, yVal))
+        if (!contains(blockOffList, xVal, yVal) && !contains(foodBucket, xVal, yVal))   //check if it has same pos as blockOffList and foodBucket items on board
         {
-            foodPos.symbol = generateSymbol(special);
+            foodPos.symbol = generateSymbol(special);  
             foodPos.x = xVal;
             foodPos.y = yVal;
             foodBucket->insertTail(foodPos);
@@ -58,9 +58,10 @@ bool Food::generateFood(objPosArrayList *blockOffList, bool special)
     }
 }
 
-char Food::generateSymbol(bool special) // generates symbol using rand() function
+char Food::generateSymbol(bool special) // generates symbol using rand() function and 
+//accepts a bool that tell the generate symbol function to either generate a regular or special food item
 {
-    if (!special)
+    if (!special)  
     {
         return 'o';
     }
@@ -79,37 +80,18 @@ char Food::generateSymbol(bool special) // generates symbol using rand() functio
     return symbol;
 }
 
-bool Food::checkFoodBucket()
-{
-    int counter = 0;
-    objPos foodItem;
-    for (int i = 0; i < foodBucket->getSize(); i++)
-    {
-        foodBucket->getElement(foodItem, i);
-        if (foodItem.symbol == 'o')
-        {
-            counter++;
-        }
-    }
-    if (counter == 2)
-    {
-        return true;
-    }
-}
-
-
 bool Food::contains(objPosArrayList *blockOffList, int x, int y)
 {
     objPos listElement;
-    if (blockOffList->getSize() == 0)
-    {
+    if (blockOffList->getSize() == 0)     //checking to make sure that its not null
+    { 
         return false;
     }
     for (int i = 0; i < blockOffList->getSize(); i++)
     {
-        blockOffList->getElement(listElement, i);
+        blockOffList->getElement(listElement, i);   //checking each individual element
 
-        if (x == listElement.x && y == listElement.y)
+        if (x == listElement.x && y == listElement.y)  // check if x and y equal snake position coordinates
         {
             return true;
         }

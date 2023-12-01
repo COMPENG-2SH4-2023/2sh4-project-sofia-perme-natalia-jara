@@ -20,8 +20,6 @@ class Food
         
         // generates food where positions must not overlap blockOffList elements
         bool generateFood(objPosArrayList* blockOffList, bool special);
-
-        // enum specialfeatures={};
         
     public:
         Food(GameMechs* thisGMRef);
@@ -32,10 +30,8 @@ class Food
 
         // / returns generated food bucket
         objPosArrayList* getFoodBucket();
-
-        char generateSymbol(bool special);
-
-        bool checkFoodBucket();
+        //generates the different foodBucket symbols
+        char generateSymbol(bool special); 
 };
 
 #endif

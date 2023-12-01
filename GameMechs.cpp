@@ -91,12 +91,19 @@ int GameMechs::getScore()
     return score;
 }
 
-void GameMechs::incrementScore()
+void GameMechs::incrementScore(char symbol)    //dependinhg on which symbol increase score by 1 or 5
 {
-    score++;
+    if (symbol=='o')
+    {
+       score++; 
+    }
+    else if (symbol=='x')
+    {
+        score +=5;
+    }
 }
 
-void GameMechs::decreaseScore()
+void GameMechs::decreaseScore()   //decreases score by 1
 {
     score--;
 }
