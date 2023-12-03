@@ -7,6 +7,6 @@ You must watch the briefing video and read through the manual to engage in the d
 
 Section: [01,01]
 
-MacID: [permes,jaran2]
-
-StudentID: [400441352,]
+MacID: [permes,jaran]
+ 
+StudentID: [400441352, 400400507]
