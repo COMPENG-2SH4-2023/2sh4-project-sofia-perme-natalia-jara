@@ -8,26 +8,30 @@
 #include "objPosArrayList.h"
 #include "GameMechs.h"
 
-using namespace std;
-
 
 class Food
 {
     private:
-        objPos foodPos;
         GameMechs* mainGameMechsRef;
-
         objPosArrayList* foodBucket;
 
+        // internal function to check generated coordinates against blockOffList
+        bool contains(objPosArrayList* blockOffList,int x,int y);
+        
+        // generates food where positions must not overlap blockOffList elements
+        bool generateFood(objPosArrayList* blockOffList, bool special);
+        
     public:
-        Food(GameMechs* thisGMRef); 
+        Food(GameMechs* thisGMRef);
         ~Food();
 
-        void generateFood(objPosArrayList* blockOffList); //blockoff is now entire snake body
-        void getFoodPos(objPos &returnPos);
+        // generates food bucket where positions must not overlap blockOffList elements
+        int generateFoodBucket(objPosArrayList* blockOffList);
 
+        // / returns generated food bucket
         objPosArrayList* getFoodBucket();
-  
+        //generates the different foodBucket symbols
+        char generateSymbol(bool special); 
 };
 
 #endif
