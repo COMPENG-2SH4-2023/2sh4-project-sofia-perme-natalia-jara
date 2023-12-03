@@ -1,15 +1,13 @@
 #include "Food.h"
-#include "MacUILib.h"
-#include <stdlib.h>
 #include <time.h>
+#include "GameMechs.h"
+#include "objPos.h"
+#include "objPosArrayList.h"
 
-
-Food::Food(GameMechs* thisGMRef)
+Food::Food(GameMechs *thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
-    foodPos.setObjPos(-1, -1, 'o'); //initalize food outside gameboard
-
-    foodBucket = new objPosArrayList(); //memory storage for above and beyond
+    foodBucket = new objPosArrayList();
 }
 
 Food::~Food()
@@ -17,75 +15,90 @@ Food::~Food()
     delete foodBucket;
 }
 
-void Food::generateFood(objPosArrayList* blockOffList)
+int Food::generateFoodBucket(objPosArrayList *blockOffList)
+{
+    int counter = 0;
+    foodBucket->clear();
+    int regularFeaturesNum = mainGameMechsRef->getFoodNum() - mainGameMechsRef->getFeaturesNum(); // subtracting number of regular 'o' food items by special items
+    for (int i = 0; i < regularFeaturesNum; i++)                                                  // generating regular food items
+    {
+        generateFood(blockOffList, false);
+    }
+    for (int i = 0; i < mainGameMechsRef->getFeaturesNum(); i++) // generating special features
+    {
+        generateFood(blockOffList, true);
+    }
+    return counter;
+}
+
+bool Food::generateFood(objPosArrayList *blockOffList, bool special)
 {
     srand(time(NULL));
+
     int xVal;
     int yVal;
-    objPos playerTemp;
-    bool conflict=true;
-    
-    int i = 0;
-    while(i < 2) //to generate first two special food objects
+    int counter;
+    int randNum;
+    objPos foodPos;
+
+    while (true)
     {
-        xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
-        yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
+        xVal = (rand() % (mainGameMechsRef->getBoardSizeX() - 2) + 1);
+        yVal = (rand() % (mainGameMechsRef->getBoardSizeY() - 2) + 1);
 
-        blockOffList->getElement(playerTemp, i); //get snake body element at for loop index
-
-        if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
+        if (!contains(blockOffList, xVal, yVal) && !contains(foodBucket, xVal, yVal)) // check if it has same pos as blockOffList and foodBucket items on board
         {
-            continue;
+            foodPos.symbol = generateSymbol(special);
+            foodPos.x = xVal;
+            foodPos.y = yVal;
+            foodBucket->insertTail(foodPos);
+            break;
         }
-        for (int i=0; i<foodBucket->getSize();i++)   //check if pos is same as foodpos on board
-        {
-            if (xVal==foodPos.x && yVal==foodPos.y)
-            {
-                continue;
-            }
-        }
-
-        foodPos.x = xVal; //food position can be set once no conflict is detected
-        foodPos.y = yVal;
-        foodPos.symbol = 'x';
-        foodBucket->insertTail(foodPos);
-        i++;
-    }
-
-    int j = 2;
-    while(j < 5) //generating 3 elements (from 2-5) of regular food objects
-    {
-        xVal = (rand() % (mainGameMechsRef->getBoardSizeX()-2) + 1);
-        yVal = (rand() % (mainGameMechsRef->getBoardSizeY()-2) + 1);
-
-        blockOffList->getElement(playerTemp, j); //get snake body element at for loop index
-
-        if(xVal == playerTemp.x && yVal == playerTemp.y) //check if the pos is the same as blockOffList
-        {
-            continue;
-        }
-        for (int j=2; i<foodBucket->getSize();i++) //check if pos is same as foodpos on board
-        {
-            if (xVal==foodPos.x && yVal==foodPos.y)
-            {
-                continue;
-            }
-        }
-
-        foodPos.x = xVal; //food position can be set once no conflict is detected
-        foodPos.y = yVal;
-        foodPos.symbol = 'o';
-        foodBucket->insertTail(foodPos);
-        j++;
     }
 }
 
-void Food::getFoodPos(objPos &returnPos)
+char Food::generateSymbol(bool special) // generates symbol using rand() function and
+// accepts a bool that tell the generate symbol function to either generate a regular or special food item
 {
-    returnPos = foodPos; //getter for food position (x and y coords)
+    if (!special)
+    {
+        return 'o';
+    }
+    int randNum;
+    char symbol;
+    randNum = (rand() % 2);
+    switch (randNum)
+    {
+    case 0:
+        symbol = 'x';
+        break;
+    case 1:
+        symbol = 'p';
+        break;
+    }
+    return symbol;
 }
 
-objPosArrayList* Food::getFoodBucket()
+bool Food::contains(objPosArrayList *blockOffList, int x, int y)
 {
-    return foodBucket;                   
+    objPos listElement;
+    if (blockOffList->getSize() == 0) // checking to make sure that its not null
+    {
+        return false;
+    }
+    for (int i = 0; i < blockOffList->getSize(); i++)
+    {
+        blockOffList->getElement(listElement, i); // checking each individual element
+
+        if (x == listElement.x && y == listElement.y) // check if x and y equal snake position coordinates
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+objPosArrayList *Food::getFoodBucket()
+{
+    return foodBucket;
 }

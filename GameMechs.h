@@ -6,11 +6,7 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
-// #include "Food.h"
-// #include "Player.h"
-#include "MacUILib.h"
 
-using namespace std;
 
 class GameMechs
 {
@@ -23,9 +19,14 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
+        int foodNum;   //number of food items to be generated
+        int featuresNum; //num of special features
+
+
     public:
         GameMechs();
-        GameMechs(int boardX, int boardY);
+        GameMechs(int boardX, int boardY,int numFood,int numFeatures);
+        ~GameMechs();
         
         bool getExitFlagStatus();
         void setExitTrue();
@@ -37,11 +38,16 @@ class GameMechs
         int getBoardSizeX();
         int getBoardSizeY();
 
+        int getFeaturesNum();
+        int getFoodNum();
+
         int getScore();
         void incrementScore(char symbol);
+        void decreaseScore();
 
         bool getLoseFlagStatus();
-        bool setLoseFlag();   
+        bool setLoseFlag();
+      
 };
 
 #endif
