@@ -72,7 +72,7 @@ void GameMechs::setInput(char this_input)
 
 void GameMechs::clearInput()
 {
-    input = 0;
+    input = '\0';
 }
 
 GameMechs::~GameMechs()
@@ -84,7 +84,7 @@ int GameMechs::getScore()
     return score;
 }
 
-void GameMechs::incrementScore(char symbol) // dependinhg on which symbol increase score by 1 or 5
+void GameMechs::incrementScore(char symbol) // depending on which symbol increase score by 1 or 5
 {
     if (symbol == 'o')
     {
