@@ -5,7 +5,7 @@ Project
 You must watch the briefing video and read through the manual to engage in the development activities.
 
 
-Section: [01,01]
+Section: [02,02]
 
 MacID: [permes,jaran]
  
