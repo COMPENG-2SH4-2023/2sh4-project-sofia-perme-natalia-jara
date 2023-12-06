@@ -48,7 +48,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs(30,15,FOOD_NUM,FEATURES_NUM); // need to delete from heap?
+    myGM = new GameMechs(30,15,FOOD_NUM,FEATURES_NUM); 
     myPlayer = new Player(myGM);
     myFood = new Food(myGM);
     myFood->generateFoodBucket(myPlayer->getPlayerPos());
@@ -123,17 +123,15 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    // MacUILib_clearScreen();
+    MacUILib_clearScreen();
     if (myGM->getLoseFlagStatus()==false && myGM->getExitFlagStatus() == true)
     {
-        MacUILib_printf("%s", "\n");
         MacUILib_printf("\nEXIT GAME.");
         MacUILib_printf("\nYOUR FINAL SCORE: %d", myGM->getScore());
         MacUILib_uninit();
     }
      if (myGM->getLoseFlagStatus()==true)
      {
-        MacUILib_printf("%s", "\n");
         MacUILib_printf("\nSNAKE RAN INTO ITSELF... YOU LOSE :(");
         MacUILib_printf("\nYOUR FINAL SCORE: %d", myGM->getScore());
         MacUILib_uninit();
